@@ -1,0 +1,94 @@
+<style>
+    .full button span {
+        background-color: limegreen;
+        border-radius: 32px;
+        color: black;
+    }
+
+    .partially button span {
+        background-color: orange;
+        border-radius: 32px;
+        color: black;
+    }
+</style>
+<div class="landing-section-default" fade-in ng-controller="EDController">
+    <div dw-loading="loadingMask">
+        <!--Bottom area-->
+        <div class="row rowSpacing">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+            </div>
+            <div class="row pull-right" style="margin-right:100px;"><b>Total Finds: {{totalRows}}</b></div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="panel panel-info" style="width:100%;overflow:visible;position:relative;">
+                    <div class="panel-heading">
+                        <div class="btn-sm pull-left" style="font-size:14px;font-weight:700;">
+                            Details
+                        </div>
+                        <button type="button" class="btn btn-danger pull-right" style="margin-right:3px;" ng-click="saveChanges()">Save</button>
+                        <button type="button" class="btn btn-primary pull-right" style="margin-right:3px;" ng-click="addNewPop($event)">Add</button>
+                        <button type="button" class="btn btn-info pull-right" style="margin-right:3px;" ng-click="refreshTable()">Refresh</button>
+                        <button type="button" class="btn btn-primary pull-right" style="margin-right:3px;" ng-click="editModeChange()">
+                            {{editText}}
+                        </button>
+
+                        <!-- /.col-lg-6 -->
+
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="panel-body"
+                         style="background-color:rgba(254, 254, 255, 0.93);width:100%;overflow:auto;white-space: nowrap;min-height: 500px;max-height:800px;">
+                        <table ng-table="tableParams" class="table" show-filter="false" style="font-size:11px;">
+
+                            <thead>
+                            <tr>
+                                <th ng-repeat="column in columns" ng-show="column.visible"
+                                    class="text-center sortable"
+                                    data-title="column.title"
+                                    sortable="column.field"
+                                    ng-click="sortTable(column.field)"
+                                    style="text-align: center;">{{column.title}}
+
+                                </th>
+                            </tr>
+                            <tr>
+                                <th ng-repeat="column in columns"
+                                    ng-show="column.visible"
+                                    class="text-center sortable">
+                                    <input type="text" class="form-control" ng-if="column.showFilter" ng-keydown="filterPress()"
+                                           ng-model="filter_dict[column.field]"/>
+                                </th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+
+                            <tr class="targetFoo" ng-repeat="data in $data">
+
+                                <td ng-repeat="column in columns" ng-show="column.visible"
+                                    style="text-align: center;color:black">
+                                    <div>
+                                        <input type="text" class="form-control" ng-if="column.field!=='delete'" ng-disabled="!editOn"
+                                               ng-model="data[column.field]" ng-keydown="recordToSave(data.configId)">
+                                        <button type="button" ng-if="column.field=='delete'" class="btn btn-default btn-danger" ng-click="deleteDomain(data.configId)">Delete</button>
+                                    </div>
+                                </td>
+
+                            </tr>
+
+                            <tr ng-if="data.length == 0">
+                                <td colspan="{{columns.length}}" style="text-align:center"><h5>no records
+                                    found</h5>
+                                </td>
+                            </tr>
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>

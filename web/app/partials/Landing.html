@@ -1,0 +1,41 @@
+<!--This tag is landing page.-->
+<div class="container-fluid" ng-controller="HomeController">
+    <div class="row">
+        <div class="col-lg-1 col-sm-1 col-xs-1 col-md-1 landing-background landing-section-default landing-left-qk-background landing-qk-board">
+
+            <!-- Left quick keys panel-->
+            <div class="landing-left-qk-title">Quick Keys</div>
+            <!-- Left quick keys buttons-->
+            <button type="button" ng-click="changeLanding('TroubleShooter')" class="btn btn-default landing-left-qk-blocks">Trouble Shooter</button>
+            <button type="button" ng-click="changeLanding('TestResult')" class="btn btn-default landing-left-qk-blocks">Test Result</button>
+            <button type="button" ng-click="changeLanding('editDomain')" class="btn btn-default landing-left-qk-blocks">Domain Editor</button>
+            <button type="button" ng-click="changeLanding('UserGuide')" class="btn btn-default landing-left-qk-blocks">User Guide</button>
+            <button type="button" ng-click="changeLanding('ContactUs')" class="btn btn-default landing-left-qk-blocks">Contact Us</button>
+        </div>
+
+        <div class="container-fluid landing-background col-lg-10 col-sm-10 col-xs-10 col-md-10" id="LandingContainer" style="border-radius: 5px;">
+
+            <div ng-include="'app/partials/Nav.html'"></div>
+
+            <div class="row">
+                <!--<div class="col-lg-12 col-sm-12 col-xs-12 col-md-12">-->
+                    <!--<div ng-include="'app/partials/TaskIndex.html'"></div>-->
+                <!--</div>-->
+                <div class="col-lg-12 col-sm-12 col-xs-12 col-md-12">
+                    <!--<div ng-include="'app/partials/NotificationArea.html'"></div>-->
+                    <ng-include src="landingUrl()"></ng-include>
+                </div>
+            </div>
+
+
+            <div class="footer" style="margin-bottom:50px;">
+
+                <small>This tool is only for eBay internal usage.</small>
+
+            </div>
+        </div>
+        <div class="col-lg-1 col-sm-1 col-xs-1 col-md-1"></div>
+
+
+    </div>
+</div>

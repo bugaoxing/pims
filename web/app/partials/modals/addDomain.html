@@ -1,0 +1,48 @@
+<!--New everything-->
+
+<div class="modal-header">
+    <button type="button" class="close" aria-hidden="true" ng-click="$parent.closeAddPad()">×</button>
+    <h4 class="modal-title">Edit Domain Info</h4>
+</div>
+<div class="modal-body">
+
+    <div class="form-group">
+        <label class="loginLabel" style="font-size:16px;text-shadow: 1px 0px 0px rgba(0, 0, 0, .8);">Please Type Domain Name</label>
+        <!--<div class="dropdown">-->
+            <!--<botton type="botton" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+                <!--<span class="caret"></span>-->
+            <!--</botton>-->
+            <!--<ul class="dropdown-menu" aria-labelledby="dropdownMenu1" ng-repeat="domain in $parent.paymentDomains">-->
+                <!--<li ><a target="_self">{{domain}}</a></li>-->
+            <!--</ul>-->
+        <!--</div>-->
+        <div class="input-group">
+            <input type="text" class="form-control" ng-model="$parent.addServerRequest.domainName" aria-label="..." dl-enter-key="$parent.addNew()">
+            <div class="input-group-btn">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Select Domain <span class="caret"></span></button>
+                <ul class="dropdown-menu dropdown-menu-right" >
+                    <li ng-repeat="domain in $parent.paymentDomains"><a target="_self" ng-click="$parent.addServerRequest.domainName=domain;">{{domain}}</a></li>
+                </ul>
+            </div><!-- /btn-group -->
+        </div><!-- /input-group -->
+
+    </div>
+    <div class="form-group">
+        <label class="loginLabel" style="font-size:16px;text-shadow: 1px 0px 0px rgba(0, 0, 0, .8);">Please Add Server (Split by "," and do not use webTier endPoint)</label>
+        <input type="text" ng-model="$parent.addServerRequest.hosts" class="form-control" style="color:black;"
+               aria-describedby="basic-addon2" dl-enter-key="$parent.addNew()">
+    </div>
+    <div class="form-group">
+        <label class="loginLabel" style="font-size:16px;text-shadow: 1px 0px 0px rgba(0, 0, 0, .8);">Created By</label>
+        <input type="text" ng-model="$parent.addServerRequest.createdBy" class="form-control" style="color:black;"
+               aria-describedby="basic-addon2" dl-enter-key="$parent.addNew()">
+    </div>
+
+    <div class="form-group">
+        <button type="button" class="btn btn-success form-control" style="color:black;"
+               aria-describedby="basic-addon2" ng-click="$parent.addNew()">Add</button>
+    </div>
+
+
+</div>
+

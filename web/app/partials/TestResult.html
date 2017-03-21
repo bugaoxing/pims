@@ -1,0 +1,215 @@
+<style>
+    .full button span {
+        background-color: limegreen;
+        border-radius: 32px;
+        color: black;
+    }
+
+    .partially button span {
+        background-color: orange;
+        border-radius: 32px;
+        color: black;
+    }
+</style>
+<div class="landing-section-default" fade-in ng-controller="TRController">
+    <div dw-loading="loadingMask">
+
+        <!--Header area-->
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <div class="btn-sm pull-left" style="font-size:14px;font-weight:700;">
+                    Criteria
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="panel-body">
+                <div class="row rowSpacing">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <div class="col-lg-6 col-md-6">
+                            <div class="regLabel">Start Date</div>
+                            <div ng-controller="DatePickerController">
+                                <div>
+                                    <p class="input-group">
+                                        <input type="text" class="form-control" id="startDate"
+                                               uib-datepicker-popup="{{format}}"
+                                               ng-model="$root.trStartDate"
+                                               is-open="popup1.opened" datepicker-options="dateOptions"
+                                               ng-required="true"
+                                               close-text="Close" alt-input-formats="altInputFormats"
+                                               dl-enter-key="$parent.searchCal()"/>
+                                  <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default" ng-click="open1()"><i
+                                            class="glyphicon glyphicon-calendar"></i></button>
+                                  </span>
+                                    </p>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="col-lg-6 col-md-6">
+                            <div class="regLabel">End Date</div>
+                            <div ng-controller="DatePickerController">
+                                <div>
+                                    <p class="input-group">
+                                        <input type="text" class="form-control" id="endDate"
+                                               uib-datepicker-popup="{{format}}"
+                                               ng-model="$root.trEndDate"
+                                               is-open="popup1.opened" datepicker-options="dateOptions"
+                                               ng-required="true"
+                                               close-text="Close" alt-input-formats="altInputFormats"
+                                               dl-enter-key="$parent.searchCal()"/>
+                                  <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default" ng-click="open1()"><i
+                                            class="glyphicon glyphicon-calendar"></i></button>
+                                  </span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row rowSpacing">
+                    <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                        <div class="col-lg-6 col-md-6">
+                            <div class="regLabel">Test Domain</div>
+                            <select name="multipleSelect" id="domainMultipleSelect"
+                                    ng-options="option for option in testDomains"
+                                    ng-change="domainChange()" ng-model="domainEl" class="form-control">
+                                <!--<option ng-repeat="option in testDomains" value="{{option}}">{{option}}</option>-->
+                            </select>
+                        </div>
+                        <div class="col-lg-6 col-md-6">
+                            <div class="regLabel">Test Group</div>
+                            <select name="multipleSelect" id="testGroupMultipleSelect"
+                                    ng-options="option for option in testGroups"
+                                    ng-change="testGroupChange()" ng-model="testGroupEl" class="form-control">
+                                <!--<option ng-repeat="option in testGroups" value="{{option}}">{{option}}</option>-->
+                            </select>
+                        </div>
+                        <div class="col-lg-6 col-md-6">
+                            <div class="regLabel">Test Methods</div>
+                            <select name="multipleSelect" id="testMethodMultipleSelect"
+                                    ng-options="option for option in testMethods"
+                                    ng-model="testMethodEl" class="form-control">
+                                <!--<option ng-repeat="option in testMethods" value="{{option}}">{{option}}</option>-->
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-xs-4 col-md-4 col-md-4">
+                        <div class="btn-group-vertical" role="group" style="margin-top:22px;">
+                            <button class="btn btn-danger" style="margin-bottom:10px;border-radius: 5px;" ng-click="showResult()">Show</button>
+                            <button class="btn btn-danger" style="margin-bottom:10px;border-radius: 5px;" ng-click="lastSuccess()">Last Success</button>
+                            <button class="btn btn-danger" style="margin-bottom:10px;border-radius: 5px;" ng-click="passRate()">Pass Rate</button>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+
+        <!--middle area-->
+        <!--<div class="panel panel-success col-xs-6 col-sm-6 col-md-6 col-lg-6" style="padding:0px;">-->
+        <!--<div class="panel-heading">-->
+        <!--<div class="btn-sm pull-left" style="font-size:14px;font-weight:700;">-->
+        <!--Email Report To-->
+        <!--</div>-->
+        <!--<div class="clearfix"></div>-->
+        <!--</div>-->
+        <!--<div class="panel-body">-->
+        <!--<div class="row rowSpacing">-->
+        <!--<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">-->
+        <!--<div class="input-group">-->
+        <!--<input type="text" class="form-control" id="emailList"-->
+        <!--placeholder="Recipient's username/Please split with comma(,)" dl-enter-key="sendEmail()">-->
+        <!--<span class="input-group-btn">-->
+        <!--<button class="btn btn-danger" type="button" ng-click="sendEmail()">Send</button>-->
+        <!--</span>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</div>-->
+
+        <!--Bottom area-->
+        <div class="row rowSpacing">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+            </div>
+            <div class="row pull-right" style="margin-right:100px;"><b>Total Finds: {{totalRows}}</b></div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="panel panel-info" style="width:100%;overflow:visible;position:relative;">
+                    <div class="panel-heading">
+                        <div class="btn-sm pull-left" style="font-size:14px;font-weight:700;">
+                            Details
+                        </div>
+                        <!--<div class="pull-right">-->
+                                <!--<button type="button" class="btn btn-success form-control" ng-model="filterWord">Download</button>-->
+                        <!--</div>-->
+                        <!-- /.col-lg-6 -->
+
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="panel-body"
+                         style="background-color:rgba(254, 254, 255, 0.93);width:100%;overflow:auto;white-space: nowrap;min-height: 500px;max-height:800px;">
+                        <table ng-table="tableParams" class="table" show-filter="false">
+
+                            <thead>
+                            <tr>
+                                <th ng-repeat="column in columns" ng-show="column.visible"
+                                    class="text-center sortable"
+                                    data-title="column.title"
+                                    sortable="column.field"
+                                    ng-click="sortTable(column.field)"
+                                    style="text-align: center;">{{column.title}}
+
+                                </th>
+                            </tr>
+                            <tr>
+                                <th ng-repeat="column in columns"
+                                    ng-show="column.visible"
+                                    class="text-center sortable">
+                                    <input type="text" class="form-control" ng-keyup="filterPress()"
+                                           ng-model="filter_dict[column.field]"/>
+                                </th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+
+                            <tr class="targetFoo" ng-repeat="data in $data">
+
+                                <td ng-repeat="column in columns" ng-show="column.visible"
+                                    style="text-align: center;color:black"
+                                    ng-class="{'isErrorRedTD':(column.field=='testResult'&& data[column.field]=='FAIL')}">
+                                    <div ng-if="'MAUI'!=column.title" >
+                                        {{data[column.field]}}
+                                    </div>
+                                    <a href="/autotest/getmauireport?testdomain=PGW&testindex={{data[column.field]}}"
+                                       target="_blank"
+                                       ng-if="'MAUI'==column.title">MAUI</a>
+                                </td>
+
+                            </tr>
+
+                            <tr ng-if="data.length == 0">
+                                <td colspan="{{columns.length}}" style="text-align:center"><h5>no records
+                                    found</h5>
+                                </td>
+                            </tr>
+                            </tbody>
+
+                        </table>
+
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>

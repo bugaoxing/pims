@@ -1,0 +1,235 @@
+<style>
+    .full button span {
+        background-color: limegreen;
+        border-radius: 32px;
+        color: black;
+    }
+
+    .partially button span {
+        background-color: orange;
+        border-radius: 32px;
+        color: black;
+    }
+</style>
+<div class="landing-section-default" fade-in ng-controller="TSController">
+    <div dw-loading="loadingMask">
+
+        <!--Header area-->
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <div class="btn-sm pull-left" style="font-size:14px;font-weight:700;">
+                    Criteria
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="panel-body">
+                <div class="row rowSpacing">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <div class="col-lg-6 col-md-6">
+                            <div class="regLabel">Search By</div>
+
+                            <div class="input-group" style="width:100%;display:inline-flex;">
+                                <div class="dropdown">
+                                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                        {{searchCondi}}
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                        <li ng-repeat="condition in searchConditions"><a target="_self"
+                                                                                         ng-click="changeSearchCondition(condition)">{{condition}}</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <input type="text" class="form-control" ng-model="keyWordEl"
+                                       aria-describedby="basic-addon1" dl-enter-key="searchCal()"
+                                       style="margin-left:3px;border-radius: 5px;">
+                            </div>
+
+
+                        </div>
+                        <div class="col-lg-6 col-md-6">
+                            <div class="regLabel">Payment Date</div>
+                            <div ng-controller="DatePickerController">
+                                <div>
+                                    <p class="input-group">
+                                        <input type="text" class="form-control" id="searchDate"
+                                               uib-datepicker-popup="{{format}}"
+                                               ng-model="$root.caldt"
+                                               is-open="popup1.opened" datepicker-options="dateOptions"
+                                               ng-required="true"
+                                               close-text="Close" alt-input-formats="altInputFormats" dl-enter-key="$parent.searchCal()"/>
+                                  <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default" ng-click="open1()"><i
+                                            class="glyphicon glyphicon-calendar"></i></button>
+                                  </span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row rowSpacing">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <div class="col-lg-4 col-md-4">
+                            <div class="regLabel">Select Payment Component(s)</div>
+                            <select name="multipleSelect" id="domainMultipleSelect" ng-model="domainEl" class="form-control" style="min-height:150px;overflow-y: auto;" multiple>
+                                <option ng-repeat="option in paymentDomains" value="{{option}}" ng-click="domainChange()">{{option}}</option>
+                            </select>
+                        </div>
+                        <!-- /.col-lg-4 -->
+
+                        <div class="col-lg-4 col-md-4">
+                            <div class="regLabel">Pool(s)</div>
+                            <select name="multipleSelect" id="poolMultipleSelect" ng-model="poolEl" class="form-control" style="min-height:150px;overflow-y: auto;" multiple>
+                                <option ng-repeat="option in searchPools" value="{{option}}">{{option}}</option>
+                            </select>
+                        </div>
+                        <!-- /.col-lg-4 -->
+                        <div class="col-lg-1 col-md-1" >
+
+                        </div>
+                        <!-- /.col-lg-3 -->
+                        <div class="col-lg-1 col-md-1">
+                            <button class="btn btn-danger" style="width:80px;margin-top:22px;" ng-click="searchCal()">Search
+                            </button>
+                            <div style="margin-top:5px;"></div>
+                            <!--<button class="btn btn-danger" type="button" ng-click="EditDomain()">Edit Domain</button>-->
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+        <!--middle area-->
+
+        <div class="panel panel-success col-xs-6 col-sm-6 col-md-6 col-lg-6" style="padding:0px;">
+            <div class="panel-heading">
+                <div class="btn-sm pull-left" style="font-size:14px;font-weight:700;">
+                    Search Feature Pools
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="panel-body">
+                <div class="row rowSpacing">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="featurePoolList"
+                                   placeholder="Please add feature pools./Split with comma(,)" dl-enter-key="sendEmail()">
+                          <span class="input-group-btn" style="padding: 1px;">
+                            <button class="btn btn-danger" type="button" ng-click="featureSearch()">Search</button>
+                          </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-success col-xs-5 col-sm-5 col-md-5 col-lg-5 pull-right" style="padding:0px;">
+            <div class="panel-heading">
+                <div class="btn-sm pull-left" style="font-size:14px;font-weight:700;">
+                    Email Report To
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="panel-body">
+                <div class="row rowSpacing">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="emailList"
+                                       placeholder="Recipient's username/Please split with comma(,)" dl-enter-key="sendEmail()">
+                          <span class="input-group-btn">
+                            <button class="btn btn-danger" type="button" ng-click="sendEmail()">Send</button>
+                          </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <!--Bottom area-->
+        <div class="row rowSpacing">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+            </div>
+            <div class="row pull-right" style="margin-right:100px;"><b>Total Finds: {{totalRows}}</b></div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="panel panel-info" style="width:100%;overflow:visible;position:relative;">
+                    <div class="panel-heading">
+                        <div class="btn-sm pull-left" style="font-size:14px;font-weight:700;">
+                            Details
+                        </div>
+                        <button class="btn btn-primary pull-right"
+                                ng-click="genCVS(['$$hashKey','customAttribute','partnerId'])">Export
+                        </button>
+
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="panel-body"
+                         style="background-color:rgba(254, 254, 255, 0.93);width:100%;overflow:auto;white-space: nowrap;min-height: 500px;max-height:800px;">
+                        <table ng-table="tableParams" class="table" show-filter="false" export-csv="csv">
+
+                            <thead>
+                            <tr>
+                                <th ng-repeat="column in columns" ng-show="column.visible"
+                                    class="text-center sortable"
+                                    data-title="column.title"
+                                    sortable="column.field"
+                                    ng-click="sortTable(column.field)"
+                                    style="text-align: center;">{{column.title}}
+
+                                </th>
+                            </tr>
+                            <!--<tr>-->
+                            <!--<th ng-repeat="column in columns"-->
+                            <!--ng-show="column.visible"-->
+                            <!--class="text-center sortable">-->
+                            <!--<input type="text" class="form-control"-->
+                            <!--ng-keyup="$event.keyCode == 13 ? quickQuery() : null"-->
+                            <!--ng-model="filter_dict[column.field]"/>-->
+                            <!--</th>-->
+                            <!--</tr>-->
+                            </thead>
+
+                            <tbody>
+
+                            <tr class="targetFoo" ng-repeat="data in $data">
+
+                                <td ng-repeat="column in columns" ng-show="column.visible"
+                                    style="text-align: center;color:black" ng-class="{'isErrorRedTD':(column.field=='isError'&& data[column.field]==true)}">
+                                    <div ng-show="'url'!=column.field && 'id'!=column.field">
+                                        {{data[column.field]}}
+                                    </div>
+                                    <input type="checkbox" id="{{data[column.field]}}"
+                                           ng-show="'id'==column.field"
+                                           ng-click="calIdSelection(data[column.field])"/>
+                                    <a href="{{data[column.field]}}" target="_blank"
+                                       ng-show="'url'==column.field && 'id'!=column.field">CAL</a>
+                                </td>
+
+                            </tr>
+
+                            <tr ng-if="data.length == 0">
+                                <td colspan="{{columns.length}}" style="text-align:center"><h5>no records
+                                    found</h5>
+                                </td>
+                            </tr>
+                            </tbody>
+
+                        </table>
+
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
