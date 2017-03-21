@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="app/css/font-awesome.min.css">
     <link rel="stylesheet" href="app/css/app.css">
 
-    <title>Payment Log Self-Service</title>
+    <title>学生信息管理系统</title>
     <script src="app/vendor/angular/angular.js"></script>
     <script src="app/vendor/angular/jquery.min.js"></script>
     <script src="app/vendor/angular/bootstrap.min.js"></script>
@@ -37,7 +37,7 @@
     <script src="app/vendor/angular/moment.min.js"></script>
     <script src="app/vendor/angular/ui-comments-0.2.0.js"></script>
 </head>
-<body ng-class="'MainPage-body-Kiwi'" ng-app="pmtauto">
+<body ng-class="'MainPage-body-Kiwi'" ng-app="pims">
 
 
 
@@ -58,8 +58,6 @@
 <script src="app/controllers/HomeController.js"></script>
 <script src="app/controllers/EditDomainController.js"></script>
 <script src="app/controllers/NavController.js"></script>
-<script src="app/controllers/TSController.js"></script>
-<script src="app/controllers/TRController.js"></script>
 <script src="app/controllers/DatePickerController.js"></script>
 
 

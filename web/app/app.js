@@ -33,7 +33,7 @@ function unescape(html, $sanitize) {
 
 
 // declare top-level module which depends on filters,and services
-var PRM = angular.module('pmtauto',
+var PRM = angular.module('pims',
     [
         'ngCookies',
         'ngResource',
@@ -102,30 +102,6 @@ PRM.run(function ($rootScope, $location, $http, $timeout, PRMconf) {
     //$rootScope.loginInput = !$cookieStore.get('userName') ? "" : $cookieStore.get('userName');
     $rootScope.passwordInput = '';
 
-    //$rootScope.$watch('authService.isLoggedIn()', function () {
-    //
-    //    // if never logged in, do nothing (otherwise bookmarks fail)
-    //    //if ($rootScope.authService.initialState()) {
-    //    //    // we are public browsing
-    //    //    return;
-    //    //}
-    //    noty.show('Test message',"success");
-    //    // instantiate and initialize an auth notification manager
-    //    //$rootScope.authNotifier = new NotificationManager($rootScope);
-    //
-    //    // when user logs in, redirect todddd home
-    //    if ($rootScope.authService.authorized()) {
-    //        //$location.path("/");
-    //        //$rootScope.authNotifier.notify('information', 'Welcome ' + $rootScope.authService.currentUser() + "!");
-    //    }
-    //
-    //    // when user logs out, redirect to home
-    //    if (!$rootScope.authService.authorized()) {
-    //        //$location.path("/");
-    //        //$rootScope.authNotifier.notify('information', 'Thanks for visiting.  You have been signed out.');
-    //    }
-    //
-    //}, true);
 
 
 });
