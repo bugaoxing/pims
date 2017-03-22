@@ -11,23 +11,23 @@
         color: black;
     }
 </style>
-<div class="landing-section-default" fade-in ng-controller="EDController">
+<div class="landing-section-default" fade-in ng-controller="PDController">
     <div dw-loading="loadingMask">
         <!--Bottom area-->
         <div class="row rowSpacing">
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
             </div>
-            <div class="row pull-right" style="margin-right:100px;"><b>Total Finds: {{totalRows}}</b></div>
+            <div class="row pull-right" style="margin-right:100px;"><b>总记录数:{{totalRows}}</b></div>
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <div class="panel panel-info" style="width:100%;overflow:visible;position:relative;">
                     <div class="panel-heading">
                         <div class="btn-sm pull-left" style="font-size:14px;font-weight:700;">
-                            Details
+                            详细信息
                         </div>
-                        <button type="button" class="btn btn-danger pull-right" style="margin-right:3px;" ng-click="saveChanges()">Save</button>
-                        <button type="button" class="btn btn-primary pull-right" style="margin-right:3px;" ng-click="addNewPop($event)">Add</button>
-                        <button type="button" class="btn btn-info pull-right" style="margin-right:3px;" ng-click="refreshTable()">Refresh</button>
+                        <button type="button" class="btn btn-danger pull-right" style="margin-right:3px;" ng-click="saveChanges()">保存</button>
+                        <button type="button" class="btn btn-primary pull-right" style="margin-right:3px;" ng-click="addNewPop($event)">新增</button>
+                        <button type="button" class="btn btn-info pull-right" style="margin-right:3px;" ng-click="refreshTable()">刷新</button>
                         <button type="button" class="btn btn-primary pull-right" style="margin-right:3px;" ng-click="editModeChange()">
                             {{editText}}
                         </button>
@@ -77,8 +77,7 @@
                             </tr>
 
                             <tr ng-if="data.length == 0">
-                                <td colspan="{{columns.length}}" style="text-align:center"><h5>no records
-                                    found</h5>
+                                <td colspan="{{columns.length}}" style="text-align:center"><h5>无查询记录</h5>
                                 </td>
                             </tr>
                             </tbody>

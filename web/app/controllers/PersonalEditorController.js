@@ -1,4 +1,4 @@
-PRM.controller('EDController', ["$window", "PRMconf", "ngTableParams", '$loading', 'QueryToolService', '$uibModal', '$scope', '$http', '$filter', '$rootScope', '$timeout', 'PRMconf', '$log', 'noty',
+PRM.controller('PDController', ["$window", "PRMconf", "ngTableParams", '$loading', 'QueryToolService', '$uibModal', '$scope', '$http', '$filter', '$rootScope', '$timeout', 'PRMconf', '$log', 'noty',
     function ($window, PRMconf, ngTableParams, $loading, QueryToolService, $uibModal, $scope, $http, $filter, $rootScope, $timeout, PRMconf, $log, noty) {
 
         $scope.sortByColumn = "configId";
@@ -8,7 +8,7 @@ PRM.controller('EDController', ["$window", "PRMconf", "ngTableParams", '$loading
         };
         $scope.filter_dict = {};
         $scope.editOn = false;
-        $scope.editText = "Edit";
+        $scope.editText = "编辑";
         $scope.data = [];
         $scope.dataz = [];
         $scope.paymentDomains = [];
@@ -21,14 +21,14 @@ PRM.controller('EDController', ["$window", "PRMconf", "ngTableParams", '$loading
             if(PRMconf.isNullOrEmptyOrUndefined($scope.addServerRequest.domainName)||
                 PRMconf.isNullOrEmptyOrUndefined($scope.addServerRequest.hosts) ||
                     PRMconf.isNullOrEmptyOrUndefined($scope.addServerRequest.createdBy)){
-                noty.show("Please fill all the blanks to add the server!", 'alert');
+                noty.show("请填写所有信息然后再进行保存提交!", 'alert');
                 return;
             }
 
             $loading.start("loadingMask");
-            QueryToolService.addServerInfo($scope.addServerRequest,function(res){
+            QueryToolService.addOrUpdatePersonInfo($scope.addServerRequest,function(res){
                 if(res.successful){
-                    noty.show("Add Successfully!", 'success');
+                    noty.show("添加成功!", 'success');
                     $scope.refreshTable();
                     addDomainPop.dismiss('cancel');
                 }else{
@@ -67,13 +67,13 @@ PRM.controller('EDController', ["$window", "PRMconf", "ngTableParams", '$loading
             $loading.start("loadingMask");
             QueryToolService.secretMatching({"se": password}, function (res) {
                 if (res.successful == true) {
-                    QueryToolService.deleteServer({"configId":configId},function(res){
-                        noty.show("Delete successfully!", 'success');
+                    QueryToolService.deletePerson({"configId":configId},function(res){
+                        noty.show("删除成功!", 'success');
                         $scope.refreshTable();
                         $loading.finish("loadingMask");
                     },function(error){
                         $loading.finish("loadingMask");
-                        noty.show("Delete failed!", 'error');
+                        noty.show("删除失败!", 'error');
                     });
                 } else {
                     noty.show(res.message, 'error');
@@ -89,7 +89,7 @@ PRM.controller('EDController', ["$window", "PRMconf", "ngTableParams", '$loading
 
         $scope.refreshTable = function () {
             $loading.start("loadingMask");
-            QueryToolService.getAllDomainDetails({}, function (res) {
+            QueryToolService.getAllPerson({}, function (res) {
 
                 if (res.successful == true && res.data.length > 0) {
                     $rootScope.domainRootInfo = res.data;
@@ -113,7 +113,7 @@ PRM.controller('EDController', ["$window", "PRMconf", "ngTableParams", '$loading
                         });
                     }
                     $scope.columns.push({
-                        title: "Delete",
+                        title: "删除",
                         field: "delete",
                         visible: true,
                         showFilter: false
@@ -124,7 +124,7 @@ PRM.controller('EDController', ["$window", "PRMconf", "ngTableParams", '$loading
                 $scope.tableParams.reload();
 
                 if (res.successful == true && res.data.length == 0)
-                    noty.show("Error Getting Domain names, please refresh again", 'error');
+                    noty.show("信息获取失败", 'error');
                 $loading.finish("loadingMask");
             }, function (error) {
                 $loading.finish("loadingMask");
@@ -138,12 +138,12 @@ PRM.controller('EDController', ["$window", "PRMconf", "ngTableParams", '$loading
         };
 
         $scope.editModeChange = function () {
-            if ($scope.editText == "Done") {
-                $scope.editText = "Edit";
+            if ($scope.editText == "锁定") {
+                $scope.editText = "编辑";
                 $scope.editOn = false;
                 return;
             }
-            var password = $window.prompt("Please Enter Password to Edit...");
+            var password = $window.prompt("请输入密码以继续进行编辑操作...");
             if (password == null) {
                 return;
             }
@@ -152,7 +152,7 @@ PRM.controller('EDController', ["$window", "PRMconf", "ngTableParams", '$loading
                 if (res.successful == true) {
                     $scope.editOn = true;
                     $scope.editText = "Done";
-                    noty.show("Validation Passed...", 'success');
+                    noty.show("验证成功", 'success');
                 } else {
                     noty.show(res.message, 'error');
                 }
@@ -166,7 +166,7 @@ PRM.controller('EDController', ["$window", "PRMconf", "ngTableParams", '$loading
         $scope.saveChanges = function () {
             var saveRec = [];
             if (saveIdList.length == 0) {
-                noty.show("No changes made, will do nothing...", 'success');
+                noty.show("没有任何变更.", 'success');
                 return;
             }
             angular.forEach($scope.dataz, function (rec) {
@@ -176,14 +176,14 @@ PRM.controller('EDController', ["$window", "PRMconf", "ngTableParams", '$loading
             });
             if (saveRec.length > 0) {
                 $loading.start("loadingMask");
-                QueryToolService.addServers(saveRec, function (res) {
+                QueryToolService.addOrUpdatePersonInfo(saveRec, function (res) {
 
-                    noty.show("Save successfully!", "success");
+                    noty.show("保存成功!", "success");
                     saveIdList = [];
                     $loading.finish("loadingMask");
 
                 }, function (error) {
-                    noty.show("Query failed: " + error.statusText, 'error');
+                    noty.show("保存失败: " + error.statusText, 'error');
                     saveIdList = [];
                     $loading.finish("loadingMask");
                 });

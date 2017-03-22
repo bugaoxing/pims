@@ -37,7 +37,7 @@
     <script src="app/vendor/angular/moment.min.js"></script>
     <script src="app/vendor/angular/ui-comments-0.2.0.js"></script>
 </head>
-<body ng-class="'MainPage-body-Kiwi'" ng-app="pims">
+<body ng-class="'MainPage-body-Sunny'" ng-app="pims">
 
 
 
@@ -56,7 +56,7 @@
 
 <!--Controllers -->
 <script src="app/controllers/HomeController.js"></script>
-<script src="app/controllers/EditDomainController.js"></script>
+<script src="app/controllers/PersonalEditorController.js"></script>
 <script src="app/controllers/NavController.js"></script>
 <script src="app/controllers/DatePickerController.js"></script>
 
