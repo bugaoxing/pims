@@ -60,28 +60,39 @@ PRM.controller('PDController', ["$window", "PRMconf", "ngTableParams", '$loading
 
         $scope.deleteDomain = function(configId){
 
-            var password = $window.prompt("Please Enter Password to delete...");
-            if (password == null) {
-                return;
-            }
+            //var password = $window.prompt("请先输入密码以继续删除...");
+            //if (password == null) {
+            //    return;
+            //}
             $loading.start("loadingMask");
-            QueryToolService.secretMatching({"se": password}, function (res) {
-                if (res.successful == true) {
-                    QueryToolService.deletePerson({"configId":configId},function(res){
-                        noty.show("删除成功!", 'success');
-                        $scope.refreshTable();
-                        $loading.finish("loadingMask");
-                    },function(error){
-                        $loading.finish("loadingMask");
-                        noty.show("删除失败!", 'error');
-                    });
-                } else {
-                    noty.show(res.message, 'error');
-                    $loading.finish("loadingMask");
-                }
-            }, function (error) {
+            QueryToolService.deletePerson({"id":configId},function(res){
+                noty.show("删除成功!", 'success');
+                $scope.refreshTable();
                 $loading.finish("loadingMask");
+            },function(error){
+                $loading.finish("loadingMask");
+                noty.show("删除失败!", 'error');
             });
+
+            //
+            //$loading.start("loadingMask");
+            //QueryToolService.secretMatching({"se": password}, function (res) {
+            //    if (res.successful == true) {
+            //        QueryToolService.deletePerson({"id":configId},function(res){
+            //            noty.show("删除成功!", 'success');
+            //            $scope.refreshTable();
+            //            $loading.finish("loadingMask");
+            //        },function(error){
+            //            $loading.finish("loadingMask");
+            //            noty.show("删除失败!", 'error');
+            //        });
+            //    } else {
+            //        noty.show(res.message, 'error');
+            //        $loading.finish("loadingMask");
+            //    }
+            //}, function (error) {
+            //    $loading.finish("loadingMask");
+            //});
 
 
 
@@ -101,8 +112,8 @@ PRM.controller('PDController', ["$window", "PRMconf", "ngTableParams", '$loading
                 }
                 $scope.data = [];
                 $scope.columns = [];
-                var excludeList = ['configId', '$$hashKey'];
-                var keys = Object.keys($rootScope.domainRootInfo[0]);
+                var excludeList = ['id', '$$hashKey','region','weight','height'];
+                var keys = ($rootScope.domainRootInfo&&$rootScope.domainRootInfo.length>0)?Object.keys($rootScope.domainRootInfo[0]):[];
                 if (keys.length > 0) {
                     for (var i = 0; i < keys.length; i++) {
                         $scope.columns.push({
@@ -151,7 +162,7 @@ PRM.controller('PDController', ["$window", "PRMconf", "ngTableParams", '$loading
             QueryToolService.secretMatching({"se": password}, function (res) {
                 if (res.successful == true) {
                     $scope.editOn = true;
-                    $scope.editText = "Done";
+                    $scope.editText = "锁定";
                     noty.show("验证成功", 'success');
                 } else {
                     noty.show(res.message, 'error');

@@ -4,7 +4,7 @@
 PRM.factory('QueryToolService', ['$resource', 'PRMconf', function ($resource, config) {
     return $resource('', {}, {
         'getAllPerson':{
-            url:config.MONGOQUERY + 'getAllPerson',
+            url:config.MONGOQUERY + 'queryAll',
             method: 'GET',
             headers: {'Content-Type': "application/json;charset=utf-8"},
             isArray: false,
@@ -18,7 +18,7 @@ PRM.factory('QueryToolService', ['$resource', 'PRMconf', function ($resource, co
             cache: false
         },
         'addOrUpdatePersonInfo':{
-            url:config.MONGOQUERY + 'addOrUpdatePersonInfo',
+            url:config.MONGOQUERY + 'addPerson',
             method: 'POST',
             headers: {'Content-Type': "application/json;charset=utf-8"},
             isArray: false,
@@ -26,7 +26,7 @@ PRM.factory('QueryToolService', ['$resource', 'PRMconf', function ($resource, co
         },
         'deletePerson':{
             url:config.MONGOQUERY + 'deletePerson',
-            method: 'GET',
+            method: 'POST',
             headers: {'Content-Type': "application/json;charset=utf-8"},
             isArray: false,
             cache: false
