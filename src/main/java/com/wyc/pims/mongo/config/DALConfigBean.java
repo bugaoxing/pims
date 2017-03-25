@@ -4,7 +4,7 @@ import java.io.*;
 import java.util.Properties;
 
 /**
- * Created by vizewang on 2015/9/29.
+ * Created by wycwang on 2015/9/29.
  */
 public class DALConfigBean {
     private static DALConfigBean dalConfigBean = new DALConfigBean();

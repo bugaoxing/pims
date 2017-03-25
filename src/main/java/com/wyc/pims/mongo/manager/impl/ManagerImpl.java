@@ -11,7 +11,7 @@ import org.mongodb.morphia.Key;
 import java.util.List;
 
 /**
- * Created by vizewang on 2015/9/14.
+ * Created by wycwang on 2015/9/14.
  */
 public class ManagerImpl<T> implements Manager<T> {
     private Datastore datastore = null;

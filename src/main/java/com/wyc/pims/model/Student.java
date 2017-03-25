@@ -4,7 +4,7 @@ import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
 
 /**
- * Created by Phoenix on 2017/3/23.
+ * Created by wyc on 2017/3/23.
  */
 @Entity
 public class Student extends Person {

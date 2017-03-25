@@ -13,7 +13,7 @@ import org.mongodb.morphia.Morphia;
 import java.util.Arrays;
 
 /**
- * Created by vizewang on 2015/9/14.
+ * Created by wycwang on 2015/9/14.
  */
 public class DAOImpl implements DAO {
     private static MongoClient mongoClient = null;

@@ -7,7 +7,7 @@ import org.mongodb.morphia.annotations.Id;
 import java.util.Date;
 
 /**
- * Created by vize on 2015/10/31.
+ * Created by wyc on 2015/10/31.
  */
 public class BaseInfo {
     @Id

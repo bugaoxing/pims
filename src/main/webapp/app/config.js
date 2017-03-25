@@ -1,5 +1,5 @@
 /**
- * Created by phoenix on 14/11/7.
+ * Created by wyc on 14/11/7.
  */
 serverLocation = window.location.origin;
 PRM.constant('PRMconf',
