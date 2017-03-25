@@ -10,7 +10,7 @@ import java.util.List;
 public interface Manager<T> {
     Key<T> insert(T t);
     Iterable<Key<T>> insertList(List<T> tList);
-    void delete(Object id);
+    void delete(String id);
     void update();
     List<?> read();
 }

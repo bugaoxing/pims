@@ -2,6 +2,7 @@ package com.wyc.pims.mongo.manager.impl;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
+import com.wyc.pims.model.Student;
 import com.wyc.pims.mongo.dao.impl.DAOImpl;
 import com.wyc.pims.mongo.manager.Manager;
 import org.mongodb.morphia.Datastore;
@@ -29,10 +30,9 @@ public class ManagerImpl<T> implements Manager<T> {
         return datastore.save(list);
     }
 
-    public void delete(Object id) {
-        DBObject dbObject = new BasicDBObject();
-        dbObject.put("id",id);
-        datastore.getCollection(defaultClaz).remove(dbObject);
+    public void delete(String id) {
+
+        datastore.delete(datastore.createQuery(Student.class).filter("_id", id));
     }
 
     public void update() {

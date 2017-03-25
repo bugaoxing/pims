@@ -68,9 +68,9 @@
                                 <td ng-repeat="column in columns" ng-show="column.visible"
                                     style="text-align: center;color:black">
                                     <div>
-                                        <input type="text" class="form-control" ng-if="column.field!=='delete'" ng-disabled="!editOn"
-                                               ng-model="data[column.field]" ng-keydown="recordToSave(data.configId)">
-                                        <button type="button" ng-if="column.field=='delete'" class="btn btn-default btn-danger" ng-click="deleteDomain(data.configId)">Delete</button>
+                                        <input type="text" class="form-control" style="font-size:11px;" ng-if="column.field!=='delete'" ng-disabled="!editOn"
+                                               ng-model="data[column.field]" ng-keydown="recordToSave(data.id)">
+                                        <button type="button" ng-if="column.field=='delete'" class="btn btn-default btn-danger" ng-click="deleteDomain(data.id)">Delete</button>
                                     </div>
                                 </td>
 

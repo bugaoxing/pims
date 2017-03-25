@@ -1,5 +1,7 @@
 package com.wyc.pims.controller;
 
+import com.google.gson.JsonObject;
+import com.mongodb.util.JSON;
 import com.wyc.pims.model.ResponsePackage;
 import com.wyc.pims.model.Student;
 import com.wyc.pims.mongo.ManagerBuilder;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Phoenix on 2017/3/23.
@@ -37,6 +40,21 @@ public class PIMSController {
 
     @RequestMapping(value = "/addPerson", method = RequestMethod.POST, produces = "application/json")
     public @ResponseBody
+    ResponsePackage addPerson(@RequestBody Student student){
+
+        try {
+            ManagerBuilder.build("Student").insert(student);
+            return UnifiedFunctions.buildQuickEmptySuccess("成功");
+
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            return UnifiedFunctions.buildQuickError("插入失败:"+e.getMessage());
+        }
+
+    }
+
+    @RequestMapping(value = "/addPersons", method = RequestMethod.POST, produces = "application/json")
+    public @ResponseBody
     ResponsePackage addPersons(@RequestBody List<Student> students){
 
         try {
@@ -55,7 +73,8 @@ public class PIMSController {
     ResponsePackage addPersons(@RequestBody String id){
 
         try {
-            ManagerBuilder.build("Student").delete(id);
+            Map<String,String> maps = (Map) JSON.parse(id);
+            ManagerBuilder.build("Student").delete(maps.get("id"));
             return UnifiedFunctions.buildQuickEmptySuccess("成功");
 
         } catch (ClassNotFoundException e) {

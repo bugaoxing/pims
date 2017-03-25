@@ -1,7 +1,7 @@
 PRM.controller('PDController', ["$window", "PRMconf", "ngTableParams", '$loading', 'QueryToolService', '$uibModal', '$scope', '$http', '$filter', '$rootScope', '$timeout', 'PRMconf', '$log', 'noty',
     function ($window, PRMconf, ngTableParams, $loading, QueryToolService, $uibModal, $scope, $http, $filter, $rootScope, $timeout, PRMconf, $log, noty) {
 
-        $scope.sortByColumn = "configId";
+        $scope.sortByColumn = "id";
         $scope.sortTable = function (selColumn) {
             $scope.sortByColumn = selColumn;
             $scope.tableParams.reload();
@@ -11,32 +11,35 @@ PRM.controller('PDController', ["$window", "PRMconf", "ngTableParams", '$loading
         $scope.editText = "编辑";
         $scope.data = [];
         $scope.dataz = [];
-        $scope.paymentDomains = [];
         var saveIdList = [];
         var addDomainPop;
         $scope.addServerRequest = {};
 
-        $scope.addNew = function(){
+        $scope.addNew = function () {
 
-            if(PRMconf.isNullOrEmptyOrUndefined($scope.addServerRequest.domainName)||
-                PRMconf.isNullOrEmptyOrUndefined($scope.addServerRequest.hosts) ||
-                    PRMconf.isNullOrEmptyOrUndefined($scope.addServerRequest.createdBy)){
+            if (PRMconf.isNullOrEmptyOrUndefined($scope.addServerRequest.name) ||
+                PRMconf.isNullOrEmptyOrUndefined($scope.addServerRequest.sex) ||
+                PRMconf.isNullOrEmptyOrUndefined($scope.addServerRequest.age) ||
+                PRMconf.isNullOrEmptyOrUndefined($scope.addServerRequest.major) ||
+                PRMconf.isNullOrEmptyOrUndefined($scope.addServerRequest.grade) ||
+                PRMconf.isNullOrEmptyOrUndefined($scope.addServerRequest.masterName)) {
                 noty.show("请填写所有信息然后再进行保存提交!", 'alert');
                 return;
             }
 
             $loading.start("loadingMask");
-            QueryToolService.addOrUpdatePersonInfo($scope.addServerRequest,function(res){
-                if(res.successful){
+            $scope.addServerRequest.id = new Date().getTime();
+            QueryToolService.addPerson($scope.addServerRequest, function (res) {
+                if (res.successful) {
                     noty.show("添加成功!", 'success');
                     $scope.refreshTable();
                     addDomainPop.dismiss('cancel');
-                }else{
+                } else {
                     noty.show(res.message, 'error');
                 }
 
                 $loading.finish("loadingMask");
-            },function(error){
+            }, function (error) {
                 $loading.finish("loadingMask");
             })
         };
@@ -58,18 +61,18 @@ PRM.controller('PDController', ["$window", "PRMconf", "ngTableParams", '$loading
             addDomainPop.dismiss('cancel');
         };
 
-        $scope.deleteDomain = function(configId){
+        $scope.deleteDomain = function (configId) {
 
-            //var password = $window.prompt("请先输入密码以继续删除...");
-            //if (password == null) {
-            //    return;
-            //}
+            var confirm = $window.confirm("是否确认要删除?");
+            if (!confirm) {
+                return;
+            }
             $loading.start("loadingMask");
-            QueryToolService.deletePerson({"id":configId},function(res){
+            QueryToolService.deletePerson({"id": configId}, function (res) {
                 noty.show("删除成功!", 'success');
                 $scope.refreshTable();
                 $loading.finish("loadingMask");
-            },function(error){
+            }, function (error) {
                 $loading.finish("loadingMask");
                 noty.show("删除失败!", 'error');
             });
@@ -95,29 +98,34 @@ PRM.controller('PDController', ["$window", "PRMconf", "ngTableParams", '$loading
             //});
 
 
-
         };
+
+        var NameMapping = {
+            "masterName": "导师",
+            "grade": "年级",
+            "points": "总评",
+            "room": "宿舍",
+            "major": "专业",
+            "name": "姓名",
+            "age": "年龄",
+            "sex": "性别",
+        };
+
 
         $scope.refreshTable = function () {
             $loading.start("loadingMask");
             QueryToolService.getAllPerson({}, function (res) {
+                $rootScope.domainRootInfo = res.data;
 
-                if (res.successful == true && res.data.length > 0) {
-                    $rootScope.domainRootInfo = res.data;
-                    angular.forEach($rootScope.domainRootInfo, function (rec) {
-                        if ($scope.paymentDomains.indexOf(rec.domainName) < 0) {
-                            $scope.paymentDomains.push(rec.domainName);
-                        }
-                    });
-                }
                 $scope.data = [];
                 $scope.columns = [];
-                var excludeList = ['id', '$$hashKey','region','weight','height'];
-                var keys = ($rootScope.domainRootInfo&&$rootScope.domainRootInfo.length>0)?Object.keys($rootScope.domainRootInfo[0]):[];
+                var excludeList = ['id', '$$hashKey', 'region', 'weight', 'height','room'];
+                //var filterExcludeList = ['id', '$$hashKey', 'region', 'weight', 'height','room','sex','grade'];
+                var keys = ($rootScope.domainRootInfo && $rootScope.domainRootInfo.length > 0) ? Object.keys($rootScope.domainRootInfo[0]) : [];
                 if (keys.length > 0) {
                     for (var i = 0; i < keys.length; i++) {
                         $scope.columns.push({
-                            title: keys[i],
+                            title: NameMapping[keys[i]],
                             field: keys[i],
                             visible: excludeList.indexOf(keys[i]) > -1 ? false : true,
                             showFilter: true
@@ -152,42 +160,45 @@ PRM.controller('PDController', ["$window", "PRMconf", "ngTableParams", '$loading
             if ($scope.editText == "锁定") {
                 $scope.editText = "编辑";
                 $scope.editOn = false;
-                return;
+            }else{
+                $scope.editText = "锁定";
+                $scope.editOn = true;
             }
-            var password = $window.prompt("请输入密码以继续进行编辑操作...");
-            if (password == null) {
-                return;
-            }
-            $loading.start("loadingMask");
-            QueryToolService.secretMatching({"se": password}, function (res) {
-                if (res.successful == true) {
-                    $scope.editOn = true;
-                    $scope.editText = "锁定";
-                    noty.show("验证成功", 'success');
-                } else {
-                    noty.show(res.message, 'error');
-                }
-                $loading.finish("loadingMask");
-            }, function (error) {
-                $loading.finish("loadingMask");
-            });
+            //var password = $window.prompt("请输入密码以继续进行编辑操作...");
+            //if (password == null) {
+            //    return;
+            //}
+            //$loading.start("loadingMask");
+            //QueryToolService.secretMatching({"se": password}, function (res) {
+            //    if (res.successful == true) {
+            //        $scope.editOn = true;
+            //        $scope.editText = "锁定";
+            //        noty.show("验证成功", 'success');
+            //    } else {
+            //        noty.show(res.message, 'error');
+            //    }
+            //    $loading.finish("loadingMask");
+            //}, function (error) {
+            //    $loading.finish("loadingMask");
+            //});
 
         };
 
         $scope.saveChanges = function () {
             var saveRec = [];
+            console.dir(saveIdList);
             if (saveIdList.length == 0) {
-                noty.show("没有任何变更.", 'success');
+                noty.show("没有任何变更.", 'info');
                 return;
             }
             angular.forEach($scope.dataz, function (rec) {
-                if (saveIdList.indexOf(rec.configId) >= 0) {
+                if (saveIdList.indexOf(rec.id) >= 0) {
                     saveRec.push(rec);
                 }
             });
             if (saveRec.length > 0) {
                 $loading.start("loadingMask");
-                QueryToolService.addOrUpdatePersonInfo(saveRec, function (res) {
+                QueryToolService.addPersons(saveRec, function (res) {
 
                     noty.show("保存成功!", "success");
                     saveIdList = [];

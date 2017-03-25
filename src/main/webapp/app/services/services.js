@@ -17,7 +17,14 @@ PRM.factory('QueryToolService', ['$resource', 'PRMconf', function ($resource, co
             isArray: false,
             cache: false
         },
-        'addOrUpdatePersonInfo':{
+        'addPersons':{
+            url:config.MONGOQUERY + 'addPersons',
+            method: 'POST',
+            headers: {'Content-Type': "application/json;charset=utf-8"},
+            isArray: false,
+            cache: false
+        },
+        'addPerson':{
             url:config.MONGOQUERY + 'addPerson',
             method: 'POST',
             headers: {'Content-Type': "application/json;charset=utf-8"},

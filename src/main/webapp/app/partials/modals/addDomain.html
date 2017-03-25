@@ -5,36 +5,75 @@
     <h4 class="modal-title">Edit Domain Info</h4>
 </div>
 <div class="modal-body">
-
     <div class="form-group">
-        <label class="loginLabel" style="font-size:16px;text-shadow: 1px 0px 0px rgba(0, 0, 0, .8);">Please Type Domain Name</label>
-        <!--<div class="dropdown">-->
-            <!--<botton type="botton" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
-                <!--<span class="caret"></span>-->
-            <!--</botton>-->
-            <!--<ul class="dropdown-menu" aria-labelledby="dropdownMenu1" ng-repeat="domain in $parent.paymentDomains">-->
-                <!--<li ><a target="_self">{{domain}}</a></li>-->
-            <!--</ul>-->
-        <!--</div>-->
-        <div class="input-group">
-            <input type="text" class="form-control" ng-model="$parent.addServerRequest.domainName" aria-label="..." dl-enter-key="$parent.addNew()">
-            <div class="input-group-btn">
-                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Select Domain <span class="caret"></span></button>
-                <ul class="dropdown-menu dropdown-menu-right" >
-                    <li ng-repeat="domain in $parent.paymentDomains"><a target="_self" ng-click="$parent.addServerRequest.domainName=domain;">{{domain}}</a></li>
-                </ul>
-            </div><!-- /btn-group -->
-        </div><!-- /input-group -->
-
-    </div>
-    <div class="form-group">
-        <label class="loginLabel" style="font-size:16px;text-shadow: 1px 0px 0px rgba(0, 0, 0, .8);">Please Add Server (Split by "," and do not use webTier endPoint)</label>
-        <input type="text" ng-model="$parent.addServerRequest.hosts" class="form-control" style="color:black;"
+        <label class="loginLabel" style="font-size:16px;text-shadow: 1px 0px 0px rgba(0, 0, 0, .8);">姓名</label>
+        <input type="text" ng-model="$parent.addServerRequest.name" class="form-control" style="color:black;"
                aria-describedby="basic-addon2" dl-enter-key="$parent.addNew()">
     </div>
     <div class="form-group">
-        <label class="loginLabel" style="font-size:16px;text-shadow: 1px 0px 0px rgba(0, 0, 0, .8);">Created By</label>
-        <input type="text" ng-model="$parent.addServerRequest.createdBy" class="form-control" style="color:black;"
+        <label class="loginLabel" style="font-size:16px;text-shadow: 1px 0px 0px rgba(0, 0, 0, .8);">性别</label>
+        <div class="input-group">
+            <input type="text" class="form-control" ng-model="$parent.addServerRequest.sex" aria-label="..." dl-enter-key="$parent.addNew()">
+            <div class="input-group-btn">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">请选择性别<span class="caret"></span></button>
+                <ul class="dropdown-menu dropdown-menu-right" >
+                    <li><a target="_self" ng-click="$parent.addServerRequest.sex='男';">男</a></li>
+                    <li><a target="_self" ng-click="$parent.addServerRequest.sex='女';">女</a></li>
+                </ul>
+            </div><!-- /btn-group -->
+        </div><!-- /input-group -->
+    </div>
+
+    <div class="form-group">
+        <label class="loginLabel" style="font-size:16px;text-shadow: 1px 0px 0px rgba(0, 0, 0, .8);">年龄</label>
+        <input type="text" ng-model="$parent.addServerRequest.age" class="form-control" style="color:black;"
+               aria-describedby="basic-addon2" dl-enter-key="$parent.addNew()">
+    </div>
+
+    <div class="form-group">
+        <label class="loginLabel" style="font-size:16px;text-shadow: 1px 0px 0px rgba(0, 0, 0, .8);">专业</label>
+
+        <div class="input-group">
+            <input type="text" class="form-control" ng-model="$parent.addServerRequest.major" aria-label="..." dl-enter-key="$parent.addNew()">
+            <div class="input-group-btn">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">请选择专业<span class="caret"></span></button>
+                <ul class="dropdown-menu dropdown-menu-right" >
+                    <li><a target="_self" ng-click="$parent.addServerRequest.major='计算机科学与技术';">计算机科学与技术</a></li>
+                    <li><a target="_self" ng-click="$parent.addServerRequest.major='天文';">天文</a></li>
+                    <li><a target="_self" ng-click="$parent.addServerRequest.major='文学与艺术';">文学与艺术</a></li>
+                    <li><a target="_self" ng-click="$parent.addServerRequest.major='软件工程';">软件工程</a></li>
+                    <li><a target="_self" ng-click="$parent.addServerRequest.major='经济管理';">经济管理</a></li>
+                    <li><a target="_self" ng-click="$parent.addServerRequest.major='德文';">德文</a></li>
+                    <li><a target="_self" ng-click="$parent.addServerRequest.major='金融';">金融</a></li>
+                    <li><a target="_self" ng-click="$parent.addServerRequest.major='会计';">会计</a></li>
+                    <li><a target="_self" ng-click="$parent.addServerRequest.major='游戏设计';">游戏设计</a></li>
+                    <li><a target="_self" ng-click="$parent.addServerRequest.major='考古';">考古</a></li>
+                    <li><a target="_self" ng-click="$parent.addServerRequest.major='土木工程';">土木工程</a></li>
+                    <li><a target="_self" ng-click="$parent.addServerRequest.major='英文';">英文</a></li>
+                </ul>
+            </div><!-- /btn-group -->
+        </div><!-- /input-group -->
+    </div>
+
+    <div class="form-group">
+        <label class="loginLabel" style="font-size:16px;text-shadow: 1px 0px 0px rgba(0, 0, 0, .8);">年级</label>
+        <div class="input-group">
+            <input type="text" class="form-control" ng-model="$parent.addServerRequest.grade" aria-label="..." dl-enter-key="$parent.addNew()">
+            <div class="input-group-btn">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">请选择年级<span class="caret"></span></button>
+                <ul class="dropdown-menu dropdown-menu-right" >
+                    <li><a target="_self" ng-click="$parent.addServerRequest.grade='大一';">大一</a></li>
+                    <li><a target="_self" ng-click="$parent.addServerRequest.grade='大二';">大二</a></li>
+                    <li><a target="_self" ng-click="$parent.addServerRequest.grade='大三';">大三</a></li>
+                    <li><a target="_self" ng-click="$parent.addServerRequest.grade='大四';">大四</a></li>
+                </ul>
+            </div><!-- /btn-group -->
+        </div><!-- /input-group -->
+    </div>
+
+    <div class="form-group">
+        <label class="loginLabel" style="font-size:16px;text-shadow: 1px 0px 0px rgba(0, 0, 0, .8);">导师</label>
+        <input type="text" ng-model="$parent.addServerRequest.masterName" class="form-control" style="color:black;"
                aria-describedby="basic-addon2" dl-enter-key="$parent.addNew()">
     </div>
 
