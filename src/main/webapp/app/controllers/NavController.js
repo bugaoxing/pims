@@ -6,5 +6,17 @@ PRM.controller('NavController', ['$uibModal', '$scope', '$http', '$filter', '$ro
 
         };
 
+        $scope.logout = function(){
+            $rootScope.logged=false;
+            $rootScope.isRegister=false;
+            $rootScope.login={};
+        };
+
+        $scope.returnReg = function(){
+            $rootScope.logged=false;
+            $rootScope.isRegister=true;
+            $rootScope.login={};
+        };
+
 
     }]);

@@ -13,6 +13,6 @@ public class ManagerBuilder {
     public static Manager build(String beanName) throws ClassNotFoundException {
         String fullName = pakName + "." + beanName;
         Class claz = Class.forName(fullName);
-        return new ManagerImpl(claz);
+        return new ManagerImpl(claz,beanName);
     }
 }

@@ -16,10 +16,12 @@ import java.util.List;
 public class ManagerImpl<T> implements Manager<T> {
     private Datastore datastore = null;
     private Class<T> defaultClaz;
+    private String collectionName;
 
-    public ManagerImpl(Class<T> tClass) {
+    public ManagerImpl(Class<T> tClass, String collectionName) {
         datastore = new DAOImpl().createDatastore(tClass);
         defaultClaz = tClass;
+        this.collectionName = collectionName;
     }
 
     public Key<T> insert(T t) {
@@ -32,12 +34,21 @@ public class ManagerImpl<T> implements Manager<T> {
 
     public void delete(String id) {
 
-        datastore.delete(datastore.createQuery(Student.class).filter("_id", id));
+        datastore.delete(datastore.createQuery(defaultClaz).filter("_id", id));
+    }
+
+    public long findExist(String t) {
+        return datastore.getCount(datastore.createQuery(defaultClaz).filter("_id", t));
     }
 
     public void update() {
 
     }
+    public T findById(String id) {
+        return datastore.getByKey(defaultClaz,new Key<T>(defaultClaz,collectionName,id));
+    }
+
+
 
     public List<T> read() {
         return datastore.find(defaultClaz).asList();

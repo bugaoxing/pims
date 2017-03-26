@@ -1,0 +1,87 @@
+<!--This tag is landing page.-->
+<div class="container-fluid" ng-controller="HomeController" dw-loading="loadingMask">
+    <div style="text-align: center;font-size:24px;margin-top:50px;color:white;text-shadow: 1px 1px 1px black;">{{$root.isRegister?'注册':'登录'}}</div>
+    <div class="row">
+        <div class="col-lg-4 col-sm-4 col-xs-4 col-md-4">
+        </div>
+
+        <div class="container-fluid landing-background col-lg-4 col-sm-4 col-xs-4 col-md-4"
+             style="margin-top:5px;">
+
+
+            <div class="row">
+                <div class="col-lg-12 col-sm-12 col-xs-12 col-md-12" style="padding: 18px;">
+                    <div class="form-group">
+                        <label class="loginLabel"
+                               style="font-size:16px;text-shadow: 1px 0px 0px rgba(0, 0, 0, .8);">学号/管理员编号</label>
+                        <input type="text" ng-model="$root.login.id" class="form-control" style="color:black;"
+                               aria-describedby="basic-addon2" dl-enter-key="login()">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="loginLabel"
+                               style="font-size:16px;text-shadow: 1px 0px 0px rgba(0, 0, 0, .8);">密码</label>
+                        <input type="password" ng-model="$root.login.password" class="form-control" style="color:black;"
+                               aria-describedby="basic-addon2" dl-enter-key="login()">
+                    </div>
+                    <div class="form-group" ng-show="$root.isRegister">
+                        <label class="loginLabel"
+                               style="font-size:16px;text-shadow: 1px 0px 0px rgba(0, 0, 0, .8);">重新确认密码</label>
+                        <input type="password" ng-model="$root.login.password2" class="form-control" style="color:black;"
+                               aria-describedby="basic-addon2" dl-enter-key="login()">
+                    </div>
+                    <div class="form-group" style="text-align: center;" ng-show="$root.isRegister">
+                        <label class="loginLabel"
+                               style="font-size:16px;text-shadow: 1px 0px 0px rgba(0, 0, 0, .8);">注册权限</label>
+                        <ul style="text-align: center;list-style: none;">
+                            <li class="dropdown">
+                                <a class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                   aria-haspopup="true" target=""
+                                   aria-expanded="false">{{$root.login.role=='admin'?'管理员':$root.login.role=='member'?'学生':'请选择权限'}}<span
+                                        class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a target="_self" ng-click="$root.login.role='admin'">管理员</a></li>
+                                    <li><a target="_self" ng-click="$root.login.role='member'">学生</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div style="text-align: center;">
+                        <div class="btn-group" ng-show="!$root.isRegister">
+                            <button type="button" class="btn btn-default " style="color:white;"
+                                    aria-describedby="basic-addon2" ng-click="login()">登录
+                            </button>
+                            <button type="button" class="btn btn-default" style="color:white;"
+                                    aria-describedby="basic-addon2" ng-click="register()">注册
+                            </button>
+                        </div>
+
+                        <div class="btn-group" ng-show="$root.isRegister">
+                            <button type="button" class="btn btn-default" style="color:white;"
+                                    aria-describedby="basic-addon2" ng-click="registerConfirm()">确认注册
+                            </button>
+                            <button type="button" class="btn btn-default" style="color:white;"
+                                    aria-describedby="basic-addon2" ng-click="registerDismiss()">返回登录
+                            </button>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+        <div class="col-lg-12 col-sm-12 col-xs-12 col-md-12" style="text-align: center;margin-top:30px;">
+            <div style="color:white;font-size:14px;text-shadow: 1px 1px 1px black;">学生信息管理系统 <small>wyc设计</small></div>
+        </div>
+
+        <div class="col-lg-4 col-sm-4 col-xs-4 col-md-4">
+        </div>
+
+
+    </div>
+</div>

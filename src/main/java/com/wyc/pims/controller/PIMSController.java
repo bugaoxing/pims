@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import com.mongodb.util.JSON;
 import com.wyc.pims.model.ResponsePackage;
 import com.wyc.pims.model.Student;
+import com.wyc.pims.model.User;
 import com.wyc.pims.mongo.ManagerBuilder;
 import com.wyc.pims.util.UnifiedFunctions;
 import org.springframework.stereotype.Controller;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -84,5 +86,44 @@ public class PIMSController {
 
     }
 
+
+    @RequestMapping(value = "/register", method = RequestMethod.POST, produces = "application/json")
+    public @ResponseBody
+    ResponsePackage register(@RequestBody User user){
+
+        try {
+            long existCount = ManagerBuilder.build("User").findExist(user.getId());
+            if(existCount>0)
+                return UnifiedFunctions.buildQuickError("该用户已经注册");
+            ManagerBuilder.build("User").insert(user);
+            return UnifiedFunctions.buildQuickEmptySuccess("注册成功");
+
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            return UnifiedFunctions.buildQuickError("注册失败:"+e.getMessage());
+        }
+
+    }
+
+    @RequestMapping(value = "/login", method = RequestMethod.POST, produces = "application/json")
+    public @ResponseBody
+    ResponsePackage login(@RequestBody User user){
+
+        try {
+            User findUser = (User) ManagerBuilder.build("User").findById(user.getId());
+            List<User> loggedUser = new ArrayList<User>();
+            loggedUser.add(findUser);
+            if(findUser.getPassword().equals(user.getPassword())){
+                return UnifiedFunctions.buildQuickSuccess(loggedUser,"登录成功");
+            }else{
+                return UnifiedFunctions.buildQuickError("登录失败");
+            }
+
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            return UnifiedFunctions.buildQuickError("登录失败:"+e.getMessage());
+        }
+
+    }
 
 }

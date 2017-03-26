@@ -61,7 +61,10 @@ PRM.run(function ($rootScope, $location, $http, $timeout, PRMconf) {
     // *****
     // Initialize authentication
     // *****
-
+    $rootScope.login ={};
+    $rootScope.role = "";
+    $rootScope.isRegister = false;
+    $rootScope.logged = false;
     $rootScope.bodyTheme = "MainPage-body-Sunny";
     $rootScope.pageTitle="学生信息管理系统";
 

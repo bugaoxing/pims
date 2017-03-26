@@ -61,7 +61,8 @@
 <script src="app/controllers/DatePickerController.js"></script>
 
 
-<div ng-include="'app/partials/Landing.html'" width="100%" style="box-shadow: 3px 3px 6px rgba(10, 10, 10, 0.79);width:100%">
+<div ng-show="!$root.logged" ng-include="'app/partials/Login.html'" width="100%"></div>
+<div ng-show="$root.logged" ng-include="'app/partials/Landing.html'" width="100%" style="box-shadow: 3px 3px 6px rgba(10, 10, 10, 0.79);width:100%">
 </div>
 
 </body>

@@ -37,6 +37,20 @@ PRM.factory('QueryToolService', ['$resource', 'PRMconf', function ($resource, co
             headers: {'Content-Type': "application/json;charset=utf-8"},
             isArray: false,
             cache: false
+        },
+        'register':{
+            url:config.MONGOQUERY + 'register',
+            method: 'POST',
+            headers: {'Content-Type': "application/json;charset=utf-8"},
+            isArray: false,
+            cache: false
+        },
+        'login':{
+            url:config.MONGOQUERY + 'login',
+            method: 'POST',
+            headers: {'Content-Type': "application/json;charset=utf-8"},
+            isArray: false,
+            cache: false
         }
     });
 }]);
