@@ -42,9 +42,8 @@ PRM.controller('HomeController', ['noty','$loading','QueryToolService','$uibModa
 
             if(PRMconf.isNullOrEmptyOrUndefined($rootScope.login.id)||
                 PRMconf.isNullOrEmptyOrUndefined($rootScope.login.password)||
-                PRMconf.isNullOrEmptyOrUndefined($rootScope.login.password2)||
-                PRMconf.isNullOrEmptyOrUndefined($rootScope.login.role)
-            ){
+                PRMconf.isNullOrEmptyOrUndefined($rootScope.login.password2))
+            {
                 noty.show("请确认已经填写所有信息以注册用户!", 'error');
                 return;
             }
@@ -53,6 +52,7 @@ PRM.controller('HomeController', ['noty','$loading','QueryToolService','$uibModa
                 return;
             }
             $loading.start("loadingMask");
+            $rootScope.login.role = "member";
             QueryToolService.register($rootScope.login,function(res){
 
                 if(res.successful){
