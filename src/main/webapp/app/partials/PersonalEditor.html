@@ -26,7 +26,7 @@
                             详细信息
                         </div>
                         <button type="button" class="btn btn-danger pull-right" style="margin-right:3px;" ng-show="$root.role=='admin'" ng-click="saveChanges()">保存</button>
-                        <button type="button" class="btn btn-primary pull-right" style="margin-right:3px;" ng-show="$root.role=='admin'" ng-click="addNewPop($event)">新增</button>
+                        <button type="button" class="btn btn-danger pull-right" style="margin-right:3px;" ng-show="$root.role=='admin'" ng-click="addNewPop($event)">新增</button>
                         <button type="button" class="btn btn-info pull-right" style="margin-right:3px;" ng-click="refreshTable()">刷新</button>
                         <button type="button" class="btn btn-primary pull-right" style="margin-right:3px;" ng-show="$root.role=='admin'" ng-click="editModeChange()">
                             {{editText}}
@@ -70,7 +70,7 @@
                                     <div>
                                         <input type="text" class="form-control" style="font-size:11px;" ng-if="column.field!=='delete'" ng-disabled="!editOn"
                                                ng-model="data[column.field]" ng-keydown="recordToSave(data.id)">
-                                        <button type="button" ng-if="column.field=='delete'&&$root.role=='admin'" class="btn btn-default btn-danger" ng-click="deleteDomain(data.id)">Delete</button>
+                                        <button type="button" ng-if="column.field=='delete'&&$root.role=='admin'" class="btn btn-default btn-primary" ng-click="deleteDomain(data.id)">Delete</button>
                                     </div>
                                 </td>
 

@@ -2,6 +2,7 @@ package com.wyc.pims.controller;
 
 import com.google.gson.JsonObject;
 import com.mongodb.util.JSON;
+import com.wyc.pims.handler.StudentManager;
 import com.wyc.pims.model.ResponsePackage;
 import com.wyc.pims.model.Student;
 import com.wyc.pims.model.User;
@@ -31,6 +32,11 @@ public class PIMSController {
 
         try {
             List<Student> students = ManagerBuilder.build("Student").read();
+            for(Student student:students){
+                if(student.getPoints()==null){
+                    student.setPoints("");
+                }
+            }
             return UnifiedFunctions.buildQuickSuccess(students,"成功");
 
         } catch (ClassNotFoundException e) {
@@ -45,6 +51,23 @@ public class PIMSController {
     ResponsePackage addPerson(@RequestBody Student student){
 
         try {
+            List<Student> students = ManagerBuilder.build("Student").read();
+            int nextNumber = 100000;
+            if(students.size()>0){
+                for(Student student1:students){
+                    if(student1.getNumber()>nextNumber){
+                        nextNumber = student1.getNumber();
+                    }
+                }
+                nextNumber = nextNumber+1;
+                for(Student student1:students){
+                    if(student1.getNumber()==0){
+                        student1.setNumber(nextNumber++);
+                        ManagerBuilder.build("Student").insert(student1);
+                    }
+                }
+            }
+            student.setNumber(nextNumber);
             ManagerBuilder.build("Student").insert(student);
             return UnifiedFunctions.buildQuickEmptySuccess("成功");
 

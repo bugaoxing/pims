@@ -102,6 +102,7 @@ PRM.controller('PDController', ["$window", "PRMconf", "ngTableParams", '$loading
 
         var NameMapping = {
             "masterName": "导师",
+            "number":"学号",
             "grade": "年级",
             "points": "总评",
             "room": "宿舍",
