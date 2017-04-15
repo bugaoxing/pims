@@ -61,7 +61,10 @@ PRM.run(function ($rootScope, $location, $http, $timeout, PRMconf) {
     // *****
     // Initialize authentication
     // *****
-    $rootScope.login ={};
+    $rootScope.login ={
+        id:"10000000",
+        password:"1234"
+    };
     $rootScope.role = "";
     $rootScope.isRegister = false;
     $rootScope.logged = false;

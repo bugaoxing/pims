@@ -21,7 +21,7 @@ PRM.controller('PDController', ["$window", "PRMconf", "ngTableParams", '$loading
                 PRMconf.isNullOrEmptyOrUndefined($scope.addServerRequest.sex) ||
                 PRMconf.isNullOrEmptyOrUndefined($scope.addServerRequest.age) ||
                 PRMconf.isNullOrEmptyOrUndefined($scope.addServerRequest.major) ||
-                PRMconf.isNullOrEmptyOrUndefined($scope.addServerRequest.grade) ||
+                PRMconf.isNullOrEmptyOrUndefined($scope.addServerRequest.className) ||
                 PRMconf.isNullOrEmptyOrUndefined($scope.addServerRequest.masterName)) {
                 noty.show("请填写所有信息然后再进行保存提交!", 'alert');
                 return;
@@ -103,7 +103,7 @@ PRM.controller('PDController', ["$window", "PRMconf", "ngTableParams", '$loading
         var NameMapping = {
             "masterName": "导师",
             "number":"学号",
-            "grade": "年级",
+            "className": "班级",
             "points": "总评",
             "room": "宿舍",
             "major": "专业",
@@ -120,7 +120,7 @@ PRM.controller('PDController', ["$window", "PRMconf", "ngTableParams", '$loading
 
                 $scope.data = [];
                 $scope.columns = [];
-                var excludeList = ['id', '$$hashKey', 'region', 'weight', 'height','room'];
+                var excludeList = ['id', '$$hashKey', 'region', 'weight', 'height'];
                 //var filterExcludeList = ['id', '$$hashKey', 'region', 'weight', 'height','room','sex','grade'];
                 var keys = ($rootScope.domainRootInfo && $rootScope.domainRootInfo.length > 0) ? Object.keys($rootScope.domainRootInfo[0]) : [];
                 if (keys.length > 0) {
@@ -133,8 +133,14 @@ PRM.controller('PDController', ["$window", "PRMconf", "ngTableParams", '$loading
                         });
                     }
                     $scope.columns.push({
-                        title: "删除",
+                        title: "",
                         field: "delete",
+                        visible: true,
+                        showFilter: false
+                    });
+                    $scope.columns.push({
+                        title: "",
+                        field: "more",
                         visible: true,
                         showFilter: false
                     });

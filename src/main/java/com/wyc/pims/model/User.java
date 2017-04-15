@@ -6,6 +6,7 @@ import org.mongodb.morphia.annotations.Id;
 import java.util.Date;
 
 /**
+ * 管理员信息
  * Created by wyc on 2017/3/26.
  */
 @Entity

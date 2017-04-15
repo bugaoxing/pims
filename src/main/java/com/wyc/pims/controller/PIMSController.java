@@ -32,11 +32,6 @@ public class PIMSController {
 
         try {
             List<Student> students = ManagerBuilder.build("Student").read();
-            for(Student student:students){
-                if(student.getPoints()==null){
-                    student.setPoints("");
-                }
-            }
             return UnifiedFunctions.buildQuickSuccess(students,"成功");
 
         } catch (ClassNotFoundException e) {

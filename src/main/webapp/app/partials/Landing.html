@@ -5,9 +5,17 @@
 
             <!-- Left quick keys panel-->
             <div class="landing-left-qk-title">快捷方式</div>
-            <!-- Left quick keys buttons-->
+            <!-- 学生信息总管理查询页面-->
             <button type="button" ng-click="changeLanding('PersonalEditor')" class="btn btn-default landing-left-qk-blocks">信息管理查询</button>
-            <button type="button" ng-click="changeLanding('ContactUs')" class="btn btn-default landing-left-qk-blocks">使用手册</button>
+            <!--管理员通过对不同专业的选择来自行添加该专业的适应课程,课程可以自行自定义添加,当然也有系统默认数值.其中专业课程分为四大类
+            1.  专业课程, 比如专业课程的课程名
+            2.  专业必修课程,如高等数学或者英文等
+            3.  实践课程, 课外实践课程
+            4.  选修课程,面向全全专业的选修课程,主要去修的学分.
+            -->
+            <button type="button" ng-click="changeLanding('MajorIn')" class="btn btn-default landing-left-qk-blocks">专业课程编辑</button>
+            <!--给不同班级委托不同的课程表,先选中班级,然后系统根据班级所属于的专业来调取所有专业课程,继而进行排布-->
+            <button type="button" ng-click="changeLanding('Schedule')" class="btn btn-default landing-left-qk-blocks">课程表编辑</button>
         </div>
 
         <div class="container-fluid landing-background col-lg-10 col-sm-10 col-xs-10 col-md-10" id="LandingContainer" style="border-radius: 5px;">
