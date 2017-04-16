@@ -16,6 +16,8 @@ public class Course {
     @Id
     String id;
     //课程 外键 Major major
+    String major;
+    //课程名
     String courseName;
     //课程老师
     String courseTeacher;
@@ -25,6 +27,15 @@ public class Course {
     CourseType courseType;
     //所属专业
     MajorType majorType;
+
+
+    public String getMajor() {
+        return major;
+    }
+
+    public void setMajor(String major) {
+        this.major = major;
+    }
 
     public MajorType getMajorType() {
         return majorType;

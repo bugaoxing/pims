@@ -1,0 +1,185 @@
+<style>
+    .full button span {
+        background-color: limegreen;
+        border-radius: 32px;
+        color: black;
+    }
+
+    .partially button span {
+        background-color: orange;
+        border-radius: 32px;
+        color: black;
+    }
+</style>
+<div class="landing-section-default" fade-in ng-controller="CEController">
+    <div dw-loading="loadingMask">
+        <!--Bottom area-->
+        <div class="row rowSpacing">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="form-group">
+                    <label class="loginLabel"
+                           style="font-size:16px;text-shadow: 1px 0px 0px rgba(0, 0, 0, .8);">为已有专业添加课程 <div style="font-size:9px;color:green;">制定各个专业课程表使用</div></label>
+
+                    <div class="input-group">
+                        <input type="text" class="form-control" ng-disabled="true" ng-model="selectedMajor"
+                               aria-label="...">
+
+                        <div class="input-group-btn">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false">请选择专业<span class="caret"></span></button>
+                            <ul class="dropdown-menu dropdown-menu-right">
+                                <li ng-repeat="major in allMajorsInDetails"><a target="_self" ng-click="majorExchange(major.major)">{{major.major}}</a></li>
+                            </ul>
+                        </div>
+                        <!-- /btn-group -->
+                    </div>
+                    <!-- /input-group -->
+                </div>
+            </div>
+        </div>
+        <div class="row" ng-if="selectedMajor">
+            <div class="col-lg-6 col-md-6">
+                <div class="form-group">
+                    <label class="loginLabel"
+                           style="font-size:16px;text-shadow: 1px 0px 0px rgba(0, 0, 0, .8);">已选课程</label>
+                    <select multiple class="form-control" ng-model="selDelCourses">
+                        <option ng-repeat="item in selectedCourseList">{{item}}</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6">
+                <div class="form-group">
+                    <label class="loginLabel"
+                           style="font-size:16px;text-shadow: 1px 0px 0px rgba(0, 0, 0, .8);">添加新课程</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" ng-disabled="true" ng-model="selectedCourseToAdd" aria-label="...">
+
+                        <div class="input-group-btn">
+
+                            <div class="input-group-btn">
+                                <button class="btn btn-default dropdown-toggle" ng-click="addCourseToMajor()">添加</button>
+                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                                        aria-haspopup="true" aria-expanded="false">
+                                    <span class="caret"></span></button>
+                                <ul class="dropdown-menu dropdown-menu-right">
+                                    <li ng-repeat="course in allCourses"><a target="_self" ng-click="courseAddToMajor(course)">{{course}}</a></li>
+                                </ul>
+                            </div>
+                            <!-- /btn-group -->
+                        </div>
+                        <!-- /input-group -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <label class="loginLabel"
+           style="font-size:16px;text-shadow: 1px 0px 0px rgba(0, 0, 0, .8);">课程信息编辑</label>
+    <div class="row pull-right" style="margin-top:20px;margin-right:100px;"><b>总记录数:{{totalRows}}</b></div>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding:0px;">
+        <div class="panel panel-info" style="width:100%;overflow:visible;position:relative;">
+            <div class="panel-heading">
+                <div class="btn-sm pull-left" style="font-size:14px;font-weight:700;">
+                    详细信息
+                </div>
+                <button type="button" class="btn btn-danger pull-right" style="margin-right:3px;"
+                        ng-click="saveChanges()">保存
+                </button>
+                <button type="button" class="btn btn-danger pull-right" style="margin-right:3px;"
+                        ng-click="addNewPop($event)">新增
+                </button>
+                <button type="button" class="btn btn-info pull-right" style="margin-right:3px;"
+                        ng-click="refreshTable()">刷新
+                </button>
+                <button type="button" class="btn btn-primary pull-right" style="margin-right:3px;"
+                        ng-click="editModeChange()">
+                    {{editText}}
+                </button>
+
+                <!-- /.col-lg-6 -->
+
+                <div class="clearfix"></div>
+            </div>
+            <div class="panel-body"
+                 style="background-color:rgba(254, 254, 255, 0.93);width:100%;overflow:visible;white-space: nowrap;min-height: 500px;max-height:800px;">
+                <table ng-table="tableParams" class="table" show-filter="false" style="font-size:11px;">
+
+                    <thead>
+                    <tr>
+                        <th ng-repeat="column in columns" ng-show="column.visible"
+                            class="text-center sortable"
+                            data-title="column.title"
+                            sortable="column.field"
+                            ng-click="sortTable(column.field)"
+                            style="text-align: center;">{{column.title}}
+
+                        </th>
+                    </tr>
+                    <tr>
+                        <th ng-repeat="column in columns"
+                            ng-show="column.visible"
+                            class="text-center sortable">
+                            <input type="text" class="form-control" ng-if="column.showFilter" ng-keydown="filterPress()"
+                                   ng-model="filter_dict[column.field]"/>
+                        </th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+
+                    <tr class="targetFoo" ng-repeat="data in $data">
+
+                        <td ng-repeat="column in columns" ng-show="column.visible"
+                            style="text-align: center;color:black">
+                            <div>
+                                <input type="text" class="form-control" style="font-size:11px;"
+                                       ng-if="column.field!='delete'&& column.field!='major'&& column.field!='name'&& column.field!='more'"
+                                       ng-disabled="!editOn"
+                                       ng-model="data[column.field]" ng-keydown="recordToSave(data.id)">
+                                <button type="button" ng-if="column.field=='major'" uib-tooltip="专业信息详情"
+                                        class="btn btn-default btn-success">{{data.major}}
+                                </button>
+                                <button type="button" ng-if="column.field=='name'" uib-tooltip="该学生信息详情"
+                                        class="btn btn-default btn-success">{{data.name}}
+                                </button>
+                                <div ng-if="column.field=='more'">
+                                    <div class="dropdown">
+                                        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1"
+                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                            更多
+                                            <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                            <li><a href="#" target="_self">查看课程表</a></li>
+                                            <li><a href="#" target="_self">课外实践报名</a></li>
+                                            <li><a href="#" target="_self">选修课报名</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <button type="button" ng-if="column.field=='delete'&&$root.role=='admin'"
+                                        class="btn btn-default btn-primary" ng-click="deleteDomain(data.id)">删除
+                                </button>
+                            </div>
+                        </td>
+
+                    </tr>
+
+                    <tr ng-if="data.length == 0">
+                        <td colspan="{{columns.length}}" style="text-align:center"><h5>无查询记录</h5>
+                        </td>
+                    </tr>
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+</div>
+</div>

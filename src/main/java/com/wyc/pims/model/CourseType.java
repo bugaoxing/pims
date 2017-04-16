@@ -5,5 +5,5 @@ package com.wyc.pims.model;
  */
 public enum CourseType {
 
-    PRO_COURSE,MUST_COURSE,OPTIONAL_COURSE,OUTTER_COURSE
+    专业课,必修课,选修课,课外实践课程
 }

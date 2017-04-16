@@ -31,7 +31,7 @@ public class Major {
     //专业名 外键student major
     String major;
     //专业主修课程名
-    List<Course> majorCourse;
+    List<String> majorCourse;
     //专业介绍
     String majorDescription;
     //专业创立年份
@@ -53,11 +53,11 @@ public class Major {
         this.major = major;
     }
 
-    public List<Course> getMajorCourse() {
+    public List<String> getMajorCourse() {
         return majorCourse;
     }
 
-    public void setMajorCourse(List<Course> majorCourse) {
+    public void setMajorCourse(List<String> majorCourse) {
         this.majorCourse = majorCourse;
     }
 

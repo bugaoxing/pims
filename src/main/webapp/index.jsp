@@ -57,6 +57,7 @@
 <!--Controllers -->
 <script src="app/controllers/HomeController.js"></script>
 <script src="app/controllers/PersonalEditorController.js"></script>
+<script src="app/controllers/CourseEditorController.js"></script>
 <script src="app/controllers/NavController.js"></script>
 <script src="app/controllers/DatePickerController.js"></script>
 

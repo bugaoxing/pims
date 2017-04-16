@@ -10,6 +10,20 @@ PRM.factory('QueryToolService', ['$resource', 'PRMconf', function ($resource, co
             isArray: false,
             cache: false
         },
+        'queryAllMajors':{
+            url:config.MONGOQUERY + 'queryAllMajors',
+            method: 'GET',
+            headers: {'Content-Type': "application/json;charset=utf-8"},
+            isArray: false,
+            cache: false
+        },
+        'queryAllCourse':{
+            url:config.MONGOQUERY + 'queryAllCourse',
+            method: 'GET',
+            headers: {'Content-Type': "application/json;charset=utf-8"},
+            isArray: false,
+            cache: false
+        },
         'secretMatching':{
             url:config.MONGOQUERY + 'secretMatching',
             method: 'GET',
@@ -24,6 +38,20 @@ PRM.factory('QueryToolService', ['$resource', 'PRMconf', function ($resource, co
             isArray: false,
             cache: false
         },
+        'addCourses':{
+            url:config.MONGOQUERY + 'addCourses',
+            method: 'POST',
+            headers: {'Content-Type': "application/json;charset=utf-8"},
+            isArray: false,
+            cache: false
+        },
+        'addMajors':{
+            url:config.MONGOQUERY + 'addMajors',
+            method: 'POST',
+            headers: {'Content-Type': "application/json;charset=utf-8"},
+            isArray: false,
+            cache: false
+        },
         'addPerson':{
             url:config.MONGOQUERY + 'addPerson',
             method: 'POST',
@@ -33,6 +61,13 @@ PRM.factory('QueryToolService', ['$resource', 'PRMconf', function ($resource, co
         },
         'deletePerson':{
             url:config.MONGOQUERY + 'deletePerson',
+            method: 'POST',
+            headers: {'Content-Type': "application/json;charset=utf-8"},
+            isArray: false,
+            cache: false
+        },
+        'deleteCourses':{
+            url:config.MONGOQUERY + 'deleteCourse',
             method: 'POST',
             headers: {'Content-Type': "application/json;charset=utf-8"},
             isArray: false,
