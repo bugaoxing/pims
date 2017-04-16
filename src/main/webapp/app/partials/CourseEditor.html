@@ -43,11 +43,10 @@
                     <label class="loginLabel"
                            style="font-size:16px;text-shadow: 1px 0px 0px rgba(0, 0, 0, .8);">已选课程</label>
                     <select multiple class="form-control" ng-model="selDelCourses">
-                        <option ng-repeat="item in selectedCourseList">{{item}}</option>
+                        <option ng-repeat="course in selectedCourseList" ng-click="selDelC(course)">{{course}}</option>
                     </select>
                 </div>
             </div>
-
             <div class="col-lg-6 col-md-6">
                 <div class="form-group">
                     <label class="loginLabel"
@@ -70,6 +69,13 @@
                         </div>
                         <!-- /input-group -->
                     </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" ng-if="selectedMajor">
+            <div class="col-lg-12 col-md-12">
+                <div class="form-group">
+                    <button ng-disabled="selDelCourses.length<=0" ng-click="delSelCImple()" class="btn btn-default btn-danger form-controller">删除选中课程</button>
                 </div>
             </div>
         </div>

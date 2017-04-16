@@ -1,0 +1,191 @@
+<style>
+    .full button span {
+        background-color: limegreen;
+        border-radius: 32px;
+        color: black;
+    }
+
+    .partially button span {
+        background-color: orange;
+        border-radius: 32px;
+        color: black;
+    }
+</style>
+<div class="landing-section-default" fade-in ng-controller="SHController">
+    <div dw-loading="loadingMask">
+        <!--Bottom area-->
+        <div class="row rowSpacing">
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                <div class="form-group">
+                    <label class="loginLabel"
+                           style="font-size:16px;text-shadow: 1px 0px 0px rgba(0, 0, 0, .8);">请先选择一个专业进行课程编排</label>
+
+                    <div class="input-group">
+                        <input type="text" class="form-control" ng-disabled="true" ng-model="selectedMajor"
+                               aria-label="...">
+
+                        <div class="input-group-btn">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false">请选择专业<span class="caret"></span></button>
+                            <ul class="dropdown-menu dropdown-menu-right">
+                                <li ng-repeat="major in allMajorsInDetails"><a target="_self"
+                                                                               ng-click="majorExchange(major.major)">{{major.major}}</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- /btn-group -->
+                    </div>
+                    <!-- /input-group -->
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <div class="form-group">
+                    <label class="loginLabel"
+                           style="font-size:16px;text-shadow: 1px 0px 0px rgba(0, 0, 0, .8);">请选择学期</label>
+
+                    <div class="input-group">
+                        <input type="text" class="form-control" ng-disabled="true" ng-model="selPe" aria-label="...">
+
+                        <div class="input-group-btn">
+
+                            <div class="input-group-btn">
+                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                                        aria-haspopup="true" aria-expanded="false">请选择学期
+                                    <span class="caret"></span></button>
+                                <ul class="dropdown-menu dropdown-menu-right">
+                                    <li ng-repeat="pe in period"><a target="_self"
+                                                                    ng-click="periodChange(pe)">{{pe}}</a></li>
+                                </ul>
+                            </div>
+                            <!-- /btn-group -->
+                        </div>
+                        <!-- /input-group -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6 col-md-6">
+                <div class="form-group">
+                    <label class="loginLabel"
+                           style="font-size:16px;text-shadow: 1px 0px 0px rgba(0, 0, 0, .8);">请选择班级</label>
+
+                    <div class="input-group">
+                        <input type="text" class="form-control" ng-disabled="true" ng-model="selClass" aria-label="...">
+
+                        <div class="input-group-btn">
+
+                            <div class="input-group-btn">
+                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                                        aria-haspopup="true" aria-expanded="false">请选择班级
+                                    <span class="caret"></span></button>
+                                <ul class="dropdown-menu dropdown-menu-right">
+                                    <li><a target="_self" ng-click="classChange(selectedMajor+'01')">{{selectedMajor+'01'}}</a>
+                                    </li>
+                                    <li><a target="_self" ng-click="classChange(selectedMajor+'02')">{{selectedMajor+'02'}}</a>
+                                    </li>
+                                    <li><a target="_self" ng-click="classChange(selectedMajor+'03')">{{selectedMajor+'03'}}</a>
+                                    </li>
+                                    <li><a target="_self" ng-click="classChange(selectedMajor+'04')">{{selectedMajor+'04'}}</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <!-- /btn-group -->
+                        </div>
+                        <!-- /input-group -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div ng-show="scheduleFlag">
+            <label class="loginLabel"
+                   style="font-size:16px;text-shadow: 1px 0px 0px rgba(0, 0, 0, .8);">课程表编辑</label>
+
+            <div class="row pull-right" style="margin-top:20px;margin-right:20px;margin-bottom:10px;"><b>{{selClass+'班课程表'}}</b></div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding:0px;">
+                <div class="panel panel-info" style="width:100%;overflow:visible;position:relative;">
+                    <div class="panel-heading">
+                        <div class="btn-sm pull-left" style="font-size:14px;font-weight:700;">
+                            课程信息
+                        </div>
+                        <button type="button" class="btn btn-danger pull-right" style="margin-right:3px;"
+                                ng-click="saveChanges()">保存
+                        </button>
+
+                        <button type="button" class="btn btn-info pull-right" style="margin-right:3px;"
+                                ng-click="refreshTable()">刷新
+                        </button>
+
+
+                        <!-- /.col-lg-6 -->
+
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="panel-body"
+                         style="background-color:rgba(254, 254, 255, 0.93);width:100%;overflow:visible;white-space: nowrap;min-height: 500px;max-height:800px;">
+                        <table ng-table="tableParams" class="table" show-filter="false" style="font-size:11px;">
+
+                            <thead>
+                            <tr>
+                                <th ng-repeat="column in columns" ng-show="column.visible"
+                                    class="text-center sortable"
+                                    data-title="column.title"
+                                    sortable="column.field"
+                                    ng-click="sortTable(column.field)"
+                                    style="text-align: center;">{{column.title}}
+
+                                </th>
+                            </tr>
+                            <tr>
+                                <th ng-repeat="column in columns"
+                                    ng-show="column.visible"
+                                    class="text-center sortable">
+                                    <input type="text" class="form-control" ng-if="column.showFilter"
+                                           ng-keydown="filterPress()"
+                                           ng-model="filter_dict[column.field]"/>
+                                </th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+
+                            <tr class="targetFoo" ng-repeat="data in $data">
+
+                                <td ng-repeat="column in columns" ng-show="column.visible"
+                                    style="text-align: center;color:black">
+                                    <div>
+                                        <input type="text" class="form-control" ng-disabled="true" style="font-size:11px;" ng-if="column.field=='timePeriod'"
+                                               ng-model="data[column.field]">
+
+                                        <div class="input-group" ng-if="column.field!='timePeriod'">
+                                            <input type="text" class="form-control" ng-disabled="true" ng-model="data[column.field]"
+                                                   aria-label="...">
+
+                                            <div class="input-group-btn">
+                                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                                                        aria-haspopup="true" aria-expanded="false"><span class="caret"></span></button>
+                                                <ul class="dropdown-menu dropdown-menu-right">
+                                                    <li ng-repeat="course in selectedCourseList"><a target="_self"
+                                                                                                   ng-click="data[column.field] = course;">{{course}}</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <!-- /btn-group -->
+                                        </div>
+                                    </div>
+                                </td>
+
+                            </tr>
+
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

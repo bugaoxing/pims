@@ -17,6 +17,20 @@ PRM.factory('QueryToolService', ['$resource', 'PRMconf', function ($resource, co
             isArray: false,
             cache: false
         },
+        'queryAllSchedule':{
+            url:config.MONGOQUERY + 'queryAllSchedule',
+            method: 'GET',
+            headers: {'Content-Type': "application/json;charset=utf-8"},
+            isArray: false,
+            cache: false
+        },
+        'queryScheduleById':{
+            url:config.MONGOQUERY + 'queryScheduleById',
+            method: 'GET',
+            headers: {'Content-Type': "application/json;charset=utf-8"},
+            isArray: false,
+            cache: false
+        },
         'queryAllCourse':{
             url:config.MONGOQUERY + 'queryAllCourse',
             method: 'GET',
@@ -33,6 +47,13 @@ PRM.factory('QueryToolService', ['$resource', 'PRMconf', function ($resource, co
         },
         'addPersons':{
             url:config.MONGOQUERY + 'addPersons',
+            method: 'POST',
+            headers: {'Content-Type': "application/json;charset=utf-8"},
+            isArray: false,
+            cache: false
+        },
+        'addSchedule':{
+            url:config.MONGOQUERY + 'addSchedule',
             method: 'POST',
             headers: {'Content-Type': "application/json;charset=utf-8"},
             isArray: false,

@@ -1,8 +1,6 @@
 package com.wyc.pims.controller;
 
-import com.google.gson.JsonObject;
 import com.mongodb.util.JSON;
-import com.wyc.pims.handler.StudentManager;
 import com.wyc.pims.model.*;
 import com.wyc.pims.mongo.ManagerBuilder;
 import com.wyc.pims.util.UnifiedFunctions;
@@ -26,9 +24,9 @@ import java.util.Map;
 public class PIMSController {
 
     @RequestMapping(value = "/queryAll", method = RequestMethod.GET, produces = "application/json")
-    public
-    @ResponseBody
-    ResponsePackage getAllPerson() {
+     public
+     @ResponseBody
+     ResponsePackage getAllPerson() {
 
         try {
             List<Student> students = ManagerBuilder.build("Student").read();
@@ -40,6 +38,40 @@ public class PIMSController {
         }
 
     }
+
+    @RequestMapping(value = "/queryAllSchedule", method = RequestMethod.GET, produces = "application/json")
+     public
+     @ResponseBody
+     ResponsePackage queryAllSchedule() {
+
+        try {
+            List<Student> students = ManagerBuilder.build("Schedule").read();
+            return UnifiedFunctions.buildQuickSuccess(students, "成功");
+
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            return UnifiedFunctions.buildQuickError("搜索失败:" + e.getMessage());
+        }
+
+    }
+    @RequestMapping(value = "/queryScheduleById", method = RequestMethod.GET, produces = "application/json")
+    public
+    @ResponseBody
+    ResponsePackage queryScheduleById(String id) {
+
+        try {
+            Schedule schedule = (Schedule) ManagerBuilder.build("Schedule").findById(id);
+            List<Schedule> schedules = new ArrayList<Schedule>();
+            schedules.add(schedule);
+            return UnifiedFunctions.buildQuickSuccess(schedules, "成功");
+
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            return UnifiedFunctions.buildQuickError("搜索失败:" + e.getMessage());
+        }
+
+    }
+
 
     @RequestMapping(value = "/queryAllCourse", method = RequestMethod.GET, produces = "application/json")
     public
@@ -80,21 +112,36 @@ public class PIMSController {
 
         try {
             //Mock major data
-            List<Major> majors = new ArrayList<Major>();
+//            List<Major> majors = new ArrayList<Major>();
+//            for(MajorType majorType:MajorType.values()){
+//                Major major = new Major();
+//                try {
+//                    Thread.sleep(100);
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+//                major.setId(String.valueOf(new Date().getTime()));
+//                major.setMajor(majorType.name());
+//                majors.add(major);
+//            }
+//            ManagerBuilder.build("Major").insertList(majors);
+
+            //TODO add another mock data
+
+            List<Schedule> schedules = new ArrayList<Schedule>();
             for(MajorType majorType:MajorType.values()){
-                Major major = new Major();
+                Schedule schedule = new Schedule();
                 try {
-                    Thread.sleep(100);
+                    Thread.sleep(10);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                major.setId(String.valueOf(new Date().getTime()));
-                major.setMajor(majorType.name());
-                majors.add(major);
+                schedule.setId(String.valueOf(new Date().getTime()));
+                schedule.setClassName(majorType.name()+"01");
+                schedule.setPeriod("大一上");
+                schedules.add(schedule);
             }
-            ManagerBuilder.build("Major").insertList(majors);
-
-            //TODO add another mock data
+            ManagerBuilder.build("Schedule").insertList(schedules);
 
 
 
@@ -196,12 +243,28 @@ public class PIMSController {
     }
 
     @RequestMapping(value = "/addPersons", method = RequestMethod.POST, produces = "application/json")
-    public
-    @ResponseBody
-    ResponsePackage addPersons(@RequestBody List<Student> students) {
+     public
+     @ResponseBody
+     ResponsePackage addPersons(@RequestBody List<Student> students) {
 
         try {
             ManagerBuilder.build("Student").insertList(students);
+            return UnifiedFunctions.buildQuickEmptySuccess("成功");
+
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            return UnifiedFunctions.buildQuickError("插入失败:" + e.getMessage());
+        }
+
+    }
+
+    @RequestMapping(value = "/addSchedule", method = RequestMethod.POST, produces = "application/json")
+    public
+    @ResponseBody
+    ResponsePackage addSchedule(@RequestBody List<Schedule> schedules) {
+
+        try {
+            ManagerBuilder.build("Schedule").insertList(schedules);
             return UnifiedFunctions.buildQuickEmptySuccess("成功");
 
         } catch (ClassNotFoundException e) {
