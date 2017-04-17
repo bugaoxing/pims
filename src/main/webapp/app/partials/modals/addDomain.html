@@ -62,10 +62,14 @@
             <div class="input-group-btn">
                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">请选择班级<span class="caret"></span></button>
                 <ul class="dropdown-menu dropdown-menu-right" >
-                    <li><a target="_self" ng-click="$parent.addServerRequest.className='BX0911';">BX0911</a></li>
-                    <li><a target="_self" ng-click="$parent.addServerRequest.className='BX0912';">BX0912</a></li>
-                    <li><a target="_self" ng-click="$parent.addServerRequest.className='BX0913';">BX0913</a></li>
-                    <li><a target="_self" ng-click="$parent.addServerRequest.className='BX0914';">BX0914</a></li>
+                    <li><a target="_self" ng-click="$parent.addServerRequest.className=$parent.addServerRequest.major+'01';">
+                        {{$parent.addServerRequest.major+'01'}}</a></li>
+                    <li><a target="_self" ng-click="$parent.addServerRequest.className=$parent.addServerRequest.major+'02';">
+                        {{$parent.addServerRequest.major+'02'}}</a></li>
+                    <li><a target="_self" ng-click="$parent.addServerRequest.className=$parent.addServerRequest.major+'03';">
+                        {{$parent.addServerRequest.major+'03'}}</a></li>
+                    <li><a target="_self" ng-click="$parent.addServerRequest.className=$parent.addServerRequest.major+'04';">
+                        {{$parent.addServerRequest.major+'04'}}</a></li>
                 </ul>
             </div><!-- /btn-group -->
         </div><!-- /input-group -->

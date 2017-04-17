@@ -11,6 +11,7 @@ public interface Manager<T> {
     Key<T> insert(T t);
     Iterable<Key<T>> insertList(List<T> tList);
     void delete(String id);
+    List<?> findByColumn(String key, String value);
     long findExist(String t);
     T findById(String t);
     void update();

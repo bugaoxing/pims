@@ -87,6 +87,13 @@ PRM.factory('QueryToolService', ['$resource', 'PRMconf', function ($resource, co
             isArray: false,
             cache: false
         },
+        'queryScheduleByKeyValue':{
+            url:config.MONGOQUERY + 'queryScheduleByKeyValue',
+            method: 'GET',
+            headers: {'Content-Type': "application/json;charset=utf-8"},
+            isArray: false,
+            cache: false
+        },
         'deleteCourses':{
             url:config.MONGOQUERY + 'deleteCourse',
             method: 'POST',

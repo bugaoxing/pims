@@ -1,6 +1,131 @@
 PRM.controller('PDController', ["$window", "PRMconf", "ngTableParams", '$loading', 'QueryToolService', '$uibModal', '$scope', '$http', '$filter', '$rootScope', '$timeout', 'PRMconf', '$log', 'noty',
     function ($window, PRMconf, ngTableParams, $loading, QueryToolService, $uibModal, $scope, $http, $filter, $rootScope, $timeout, PRMconf, $log, noty) {
 
+
+        //课程选择和课程表
+
+        $scope.selOuterCourse = [];
+        $scope.selExpCourse = [];
+
+        var outerPad;
+        $scope.openOuter = function (event) {
+            event.preventDefault();
+            outerPad = $uibModal.open({
+                animation: true,
+                size: "md",
+                templateUrl: 'app/partials/modals/exCourse.html',
+                //controller: 'EDController',
+                scope: $scope
+
+            });
+        };
+
+        $scope.closeOuter = function () {
+            outerPad.dismiss('cancel');
+        };
+
+        $scope.addOuterCourse = function () {
+            if ($scope.selOuterCourse.length == 4) {
+                noty.show("最多只能选择4门课外实践课程!", 'error');
+                return;
+            }
+            var Outer = $("input[name='inlineRadioOptions']:checked").val();
+            if (Outer && $scope.selOuterCourse.indexOf(Outer) < 0) {
+                $scope.selOuterCourse.push(Outer)
+                //TODO SAVE TO DB
+            }
+        };
+
+        $scope.clearOuterCourse = function () {
+            $scope.selOuterCourse = [];
+            //TODO SAVE TO DB
+        };
+
+
+        var expPad;
+        $scope.openExp = function (event) {
+            event.preventDefault();
+            expPad = $uibModal.open({
+                animation: true,
+                size: "md",
+                templateUrl: 'app/partials/modals/expCourse.html',
+                //controller: 'EDController',
+                scope: $scope
+
+            });
+        };
+
+        $scope.closeExp = function () {
+            expPad.dismiss('cancel');
+        };
+
+        $scope.addExpCourse = function () {
+            if ($scope.selExpCourse.length == 2) {
+                noty.show("最多只能选择2门选修课!", 'error');
+                return;
+            }
+            var Outer = $("input[name='inlineRadioOptionsE']:checked").val();
+            if (Outer && $scope.selExpCourse.indexOf(Outer) < 0) {
+                $scope.selExpCourse.push(Outer)
+                //TODO SAVE TO DB
+            }
+        };
+
+        $scope.clearExpCourse = function () {
+            $scope.selExpCourse = [];
+            //TODO SAVE TO DB
+        };
+
+
+        var schedulePad;
+        $scope.classNAME = "";
+        $scope.goSchedule = function (classNAME, event) {
+            $scope.classNAME = classNAME;
+            event.preventDefault();
+            schedulePad = $uibModal.open({
+                animation: true,
+                size: "lg",
+                templateUrl: 'app/partials/modals/ScheduleModal.html',
+                //controller: 'EDController',
+                scope: $scope
+
+            });
+            QueryToolService.queryAllSchedule({},function(res){
+
+                var idVal = "";
+                for(var i=0;i<res.data.length;i++){
+                    if(res.data[i].className == classNAME){
+                        idVal = res.data[i].id;
+                        break;
+                    }
+                }
+                QueryToolService.queryScheduleByKeyValue({key:"id",value:idVal},function(res){
+                    console.log("Now getting schedule");
+                    console.dir(res);
+
+                },function(err){
+
+                });
+
+            },function(err){
+
+            });
+
+            //TODO Load schedule from BD
+
+        };
+
+        $scope.closeSchedule = function () {
+            schedulePad.dismiss('cancel');
+        };
+
+
+
+
+
+
+        /////////////&&&&&&&&&&&&&&& end ((((((((((())))))))
+
         $scope.sortByColumn = "id";
         $scope.sortTable = function (selColumn) {
             $scope.sortByColumn = selColumn;
@@ -102,7 +227,7 @@ PRM.controller('PDController', ["$window", "PRMconf", "ngTableParams", '$loading
 
         var NameMapping = {
             "masterName": "导师",
-            "number":"学号",
+            "number": "学号",
             "className": "班级",
             "points": "总评",
             "room": "宿舍",
@@ -167,7 +292,7 @@ PRM.controller('PDController', ["$window", "PRMconf", "ngTableParams", '$loading
             if ($scope.editText == "锁定") {
                 $scope.editText = "编辑";
                 $scope.editOn = false;
-            }else{
+            } else {
                 $scope.editText = "锁定";
                 $scope.editOn = true;
             }

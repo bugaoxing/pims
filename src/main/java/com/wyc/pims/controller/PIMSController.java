@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -63,6 +65,25 @@ public class PIMSController {
             Schedule schedule = (Schedule) ManagerBuilder.build("Schedule").findById(id);
             List<Schedule> schedules = new ArrayList<Schedule>();
             schedules.add(schedule);
+            return UnifiedFunctions.buildQuickSuccess(schedules, "成功");
+
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            return UnifiedFunctions.buildQuickError("搜索失败:" + e.getMessage());
+        }
+
+    }
+
+    @RequestMapping(value = "/queryScheduleByKeyValue", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+    public
+    @ResponseBody
+    ResponsePackage queryScheduleById(String key,String value) {
+
+        try {
+//            String append = value.substring(value.length()-2);
+//            String tValue = value.substring(0,value.length()-2);
+//            String newVal = URLDecoder.decode(tValue,"utf-8");
+            List<Schedule> schedules = ManagerBuilder.build("Schedule").findByColumn(key,value);
             return UnifiedFunctions.buildQuickSuccess(schedules, "成功");
 
         } catch (ClassNotFoundException e) {

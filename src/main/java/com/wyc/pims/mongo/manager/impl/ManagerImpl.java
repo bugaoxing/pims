@@ -37,6 +37,11 @@ public class ManagerImpl<T> implements Manager<T> {
         datastore.delete(datastore.createQuery(defaultClaz).filter("_id", id));
     }
 
+    public List<T> findByColumn(String column,String value) {
+
+        return datastore.createQuery(defaultClaz).filter(column, value).asList();
+    }
+
     public long findExist(String t) {
         return datastore.getCount(datastore.createQuery(defaultClaz).filter("_id", t));
     }

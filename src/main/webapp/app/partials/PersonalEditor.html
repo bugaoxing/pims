@@ -68,10 +68,11 @@
                                 <td ng-repeat="column in columns" ng-show="column.visible"
                                     style="text-align: center;color:black">
                                     <div>
-                                        <input type="text" class="form-control" style="font-size:11px;" ng-if="column.field!='delete'&& column.field!='major'&& column.field!='name'&& column.field!='more'" ng-disabled="!editOn"
+                                        <input type="text" class="form-control" style="font-size:11px;" ng-if="column.field!='delete'&& column.field!='className'&& column.field!='name'&& column.field!='more'" ng-disabled="!editOn"
                                                ng-model="data[column.field]" ng-keydown="recordToSave(data.id)">
-                                        <button type="button" ng-if="column.field=='major'" uib-tooltip="专业信息详情" class="btn btn-default btn-success">{{data.major}}</button>
-                                        <button type="button" ng-if="column.field=='name'" uib-tooltip="该学生信息详情" class="btn btn-default btn-success">{{data.name}}</button>
+                                        <button type="button" ng-if="column.field=='className'" uib-tooltip="点击查看课程表"
+                                                ng-click="goSchedule(data.className,$event)" class="btn btn-default btn-success">{{data.className}}</button>
+                                        <button type="button" ng-if="column.field=='name'" uib-tooltip="{{'年龄:'+data.age+'\n'+'性别:'+data.sex;}}" class="btn btn-default btn-success">{{data.name}}</button>
                                         <div ng-if="column.field=='more'">
                                             <div class="dropdown">
                                                 <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -79,9 +80,8 @@
                                                     <span class="caret"></span>
                                                 </button>
                                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                                    <li><a href="#" target="_self">查看课程表</a></li>
-                                                    <li><a href="#" target="_self">课外实践报名</a></li>
-                                                    <li><a href="#" target="_self">选修课报名</a></li>
+                                                    <li><a target="_self" ng-click="openOuter($event)">课外实践报名</a></li>
+                                                    <li><a target="_self" ng-click="openExp($event)">选修课报名</a></li>
                                                 </ul>
                                             </div>
                                         </div>

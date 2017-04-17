@@ -1,0 +1,46 @@
+<!--New everything-->
+
+<div class="modal-header">
+    <button type="button" class="close" aria-hidden="true" ng-click="closeExp()">×</button>
+    <h4 class="modal-title">选修课选择</h4>
+</div>
+<div class="modal-body">
+
+    <div class="row">
+        <div class="col-lg-4 col-md-4">
+            <div style="font-size: 14px;font-weight: 400;text-shadow: 0px 0px 1px black;">可选课程</div>
+            <label class="radio-inline" style="width: 100%;margin-left:0px;margin-top:5px;">
+                <input type="radio" name="inlineRadioOptionsE" id="inlineRadio1" value="锤工"> 文学鉴赏
+            </label>
+            <label class="radio-inline" style="width: 100%;margin-left:0px;margin-top:5px;">
+                <input type="radio" name="inlineRadioOptionsE" id="inlineRadio2" value="电工"> 电影历史
+            </label>
+            <label class="radio-inline" style="width: 100%;margin-left:0px;margin-top:5px;">
+                <input type="radio" name="inlineRadioOptionsE" id="inlineRadio3" value="电气工"> 人工智能
+            </label>
+            <label class="radio-inline" style="width: 100%;margin-left:0px;margin-top:5px;">
+                <input type="radio" name="inlineRadioOptionsE" id="inlineRadio4" value="自愿者活动"> 经济学简史
+            </label>
+            <label class="radio-inline" style="width: 100%;margin-left:0px;margin-top:5px;">
+                <input type="radio" name="inlineRadioOptionsE" id="inlineRadio5" value="义务清洁工"> 时间驳论
+            </label>
+            <label class="radio-inline" style="width: 100%;margin-left:0px;margin-top:5px;">
+                <input type="radio" name="inlineRadioOptionsE" id="inlineRadio6" value="文化宣传"> 数据的奥秘
+            </label>
+        </div>
+
+        <div class="col-lg-4 col-md-4">
+            <button class="btn btn-default btn-danger" style="width:51%" ng-click="addExpCourse()">选择</button>
+            <button class="btn btn-default btn-danger" style="width:51%" ng-click="clearExpCourse()">清空</button>
+        </div>
+
+        <div class="col-lg-4 col-md-4">
+            <div style="font-size: 14px;font-weight: 400;text-shadow: 1px 1px 1px black;">已选课程</div>
+            <select multiple style="border:none;">
+                <option ng-repeat="course in selExpCourse">{{course}}</option>
+            </select>
+        </div>
+    </div>
+
+</div>
+

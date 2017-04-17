@@ -3,6 +3,8 @@ package com.wyc.pims.model;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
 
+import java.util.List;
+
 /**
  * 学生总体信息
  * Created by wyc on 2017/3/23.
@@ -44,7 +46,27 @@ public class Student{
     String subContactPhone;
     //次要联系人姓名
     String subContactPerson;
+    //选修课
+    List<String> xuanxiuCourse;
+    //课外实践课
+    List<String> shijianCourse;
 
+
+    public List<String> getXuanxiuCourse() {
+        return xuanxiuCourse;
+    }
+
+    public void setXuanxiuCourse(List<String> xuanxiuCourse) {
+        this.xuanxiuCourse = xuanxiuCourse;
+    }
+
+    public List<String> getShijianCourse() {
+        return shijianCourse;
+    }
+
+    public void setShijianCourse(List<String> shijianCourse) {
+        this.shijianCourse = shijianCourse;
+    }
 
     public String getName() {
         return name;
