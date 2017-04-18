@@ -2,7 +2,7 @@
 
 <div class="modal-header">
     <button type="button" class="close" aria-hidden="true" ng-click="closeOuter()">×</button>
-    <h4 class="modal-title">课外实践课选择</h4>
+    <h4 class="modal-title">课外实践课选择 - (一名学生只能同时选择4个课外实践课程)</h4>
 </div>
 <div class="modal-body">
 
@@ -36,7 +36,7 @@
 
         <div class="col-lg-4 col-md-4">
             <div style="font-size: 14px;font-weight: 400;text-shadow: 1px 1px 1px black;">已选课程</div>
-            <select multiple style="border:none;">
+            <select multiple style="border:none;overflow:hidden;">
                 <option ng-repeat="course in selOuterCourse">{{course}}</option>
             </select>
         </div>

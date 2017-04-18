@@ -6,10 +6,18 @@ PRM.controller('PDController', ["$window", "PRMconf", "ngTableParams", '$loading
 
         $scope.selOuterCourse = [];
         $scope.selExpCourse = [];
-
+        $scope.selectedCourseNId = "";
         var outerPad;
-        $scope.openOuter = function (event) {
+        $scope.openOuter = function (id,event) {
             event.preventDefault();
+            $scope.selectedCourseNId = id;
+            console.log(id);
+            for(var i=0;i<$rootScope.domainRootInfo.length;i++){
+                if($rootScope.domainRootInfo[i].id==$scope.selectedCourseNId){
+                    $scope.selOuterCourse = $rootScope.domainRootInfo[i].shijianCourse || [];
+                    break;
+                }
+            }
             outerPad = $uibModal.open({
                 animation: true,
                 size: "md",
@@ -31,20 +39,58 @@ PRM.controller('PDController', ["$window", "PRMconf", "ngTableParams", '$loading
             }
             var Outer = $("input[name='inlineRadioOptions']:checked").val();
             if (Outer && $scope.selOuterCourse.indexOf(Outer) < 0) {
-                $scope.selOuterCourse.push(Outer)
-                //TODO SAVE TO DB
+                var backCourse = angular.copy($scope.selOuterCourse);
+                $scope.selOuterCourse.push(Outer);
+                var saveUser = {};
+                for(var i=0;i<$rootScope.domainRootInfo.length;i++){
+                    if($rootScope.domainRootInfo[i].id==$scope.selectedCourseNId){
+                        saveUser = $rootScope.domainRootInfo[i];
+                        $rootScope.domainRootInfo[i].shijianCourse = $scope.selOuterCourse;
+                        break;
+                    }
+                }
+                saveUser.shijianCourse = $scope.selOuterCourse;
+                QueryToolService.addPerson(saveUser,function(res){
+                    noty.show("选课成功!","success");
+                },function(err){
+                    $scope.selOuterCourse = backCourse;
+                    noty.show("选课失败!","error");
+                });
             }
         };
 
         $scope.clearOuterCourse = function () {
+            var backCourse = angular.copy($scope.selOuterCourse);
             $scope.selOuterCourse = [];
-            //TODO SAVE TO DB
+            var saveUser = {};
+            for(var i=0;i<$rootScope.domainRootInfo.length;i++){
+                if($rootScope.domainRootInfo[i].id==$scope.selectedCourseNId){
+                    saveUser = $rootScope.domainRootInfo[i];
+                    $rootScope.domainRootInfo[i].shijianCourse = [];
+                    break;
+                }
+            }
+            saveUser.shijianCourse = $scope.selOuterCourse;
+            QueryToolService.addPerson(saveUser,function(res){
+                noty.show("清空成功!","success");
+            },function(err){
+                $scope.selOuterCourse = backCourse;
+                noty.show("清空失败!","error");
+            });
         };
 
 
         var expPad;
-        $scope.openExp = function (event) {
+        $scope.openExp = function (id,event) {
             event.preventDefault();
+            $scope.selectedCourseNId = id;
+            console.log(id);
+            for(var i=0;i<$rootScope.domainRootInfo.length;i++){
+                if($rootScope.domainRootInfo[i].id==$scope.selectedCourseNId){
+                    $scope.selExpCourse = $rootScope.domainRootInfo[i].xuanxiuCourse || [];
+                    break;
+                }
+            }
             expPad = $uibModal.open({
                 animation: true,
                 size: "md",
@@ -66,18 +112,50 @@ PRM.controller('PDController', ["$window", "PRMconf", "ngTableParams", '$loading
             }
             var Outer = $("input[name='inlineRadioOptionsE']:checked").val();
             if (Outer && $scope.selExpCourse.indexOf(Outer) < 0) {
-                $scope.selExpCourse.push(Outer)
-                //TODO SAVE TO DB
+                var backCourse = angular.copy($scope.selExpCourse);
+                $scope.selExpCourse.push(Outer);
+                var saveUser = {};
+                for(var i=0;i<$rootScope.domainRootInfo.length;i++){
+                    if($rootScope.domainRootInfo[i].id==$scope.selectedCourseNId){
+                        saveUser = $rootScope.domainRootInfo[i];
+                        $rootScope.domainRootInfo[i].xuanxiuCourse= $scope.selExpCourse;
+                        break;
+                    }
+                }
+                saveUser.shijianCourse = $scope.selExpCourse;
+                QueryToolService.addPerson(saveUser,function(res){
+                    noty.show("选课成功!","success");
+                },function(err){
+                    $scope.selExpCourse = backCourse;
+                    noty.show("选课失败!","error");
+                });
             }
         };
 
         $scope.clearExpCourse = function () {
+
+            var backCourse = angular.copy($scope.selExpCourse);
             $scope.selExpCourse = [];
-            //TODO SAVE TO DB
+            var saveUser = {};
+            for(var i=0;i<$rootScope.domainRootInfo.length;i++){
+                if($rootScope.domainRootInfo[i].id==$scope.selectedCourseNId){
+                    saveUser = $rootScope.domainRootInfo[i];
+                    $rootScope.domainRootInfo[i].xuanxiuCourse = [];
+                    break;
+                }
+            }
+            saveUser.xuanxiuCourse = $scope.selExpCourse;
+            QueryToolService.addPerson(saveUser,function(res){
+                noty.show("选课成功!","success");
+            },function(err){
+                $scope.selExpCourse = backCourse;
+                noty.show("选课失败!","error");
+            });
         };
 
 
         var schedulePad;
+        $scope.SelSchedule = {};
         $scope.classNAME = "";
         $scope.goSchedule = function (classNAME, event) {
             $scope.classNAME = classNAME;
@@ -101,7 +179,9 @@ PRM.controller('PDController', ["$window", "PRMconf", "ngTableParams", '$loading
                 }
                 QueryToolService.queryScheduleByKeyValue({key:"id",value:idVal},function(res){
                     console.log("Now getting schedule");
-                    console.dir(res);
+                    if(res.data && res.data.length==1){
+                        $scope.SelSchedule = res.data[0];
+                    }
 
                 },function(err){
 
@@ -111,7 +191,6 @@ PRM.controller('PDController', ["$window", "PRMconf", "ngTableParams", '$loading
 
             });
 
-            //TODO Load schedule from BD
 
         };
 
@@ -245,7 +324,7 @@ PRM.controller('PDController', ["$window", "PRMconf", "ngTableParams", '$loading
 
                 $scope.data = [];
                 $scope.columns = [];
-                var excludeList = ['id', '$$hashKey', 'region', 'weight', 'height'];
+                var excludeList = ['id', '$$hashKey', 'region', 'weight', 'height','xuanxiuCourse','shijianCourse'];
                 //var filterExcludeList = ['id', '$$hashKey', 'region', 'weight', 'height','room','sex','grade'];
                 var keys = ($rootScope.domainRootInfo && $rootScope.domainRootInfo.length > 0) ? Object.keys($rootScope.domainRootInfo[0]) : [];
                 if (keys.length > 0) {

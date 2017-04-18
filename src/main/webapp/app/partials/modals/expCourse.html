@@ -2,7 +2,7 @@
 
 <div class="modal-header">
     <button type="button" class="close" aria-hidden="true" ng-click="closeExp()">×</button>
-    <h4 class="modal-title">选修课选择</h4>
+    <h4 class="modal-title">选修课选择 - (一名学生只能同时选择两门课程)</h4>
 </div>
 <div class="modal-body">
 
@@ -10,22 +10,22 @@
         <div class="col-lg-4 col-md-4">
             <div style="font-size: 14px;font-weight: 400;text-shadow: 0px 0px 1px black;">可选课程</div>
             <label class="radio-inline" style="width: 100%;margin-left:0px;margin-top:5px;">
-                <input type="radio" name="inlineRadioOptionsE" id="inlineRadio1" value="锤工"> 文学鉴赏
+                <input type="radio" name="inlineRadioOptionsE" id="inlineRadio1" value="文学鉴赏"> 文学鉴赏
             </label>
             <label class="radio-inline" style="width: 100%;margin-left:0px;margin-top:5px;">
-                <input type="radio" name="inlineRadioOptionsE" id="inlineRadio2" value="电工"> 电影历史
+                <input type="radio" name="inlineRadioOptionsE" id="inlineRadio2" value="电影历史"> 电影历史
             </label>
             <label class="radio-inline" style="width: 100%;margin-left:0px;margin-top:5px;">
-                <input type="radio" name="inlineRadioOptionsE" id="inlineRadio3" value="电气工"> 人工智能
+                <input type="radio" name="inlineRadioOptionsE" id="inlineRadio3" value="人工智能"> 人工智能
             </label>
             <label class="radio-inline" style="width: 100%;margin-left:0px;margin-top:5px;">
-                <input type="radio" name="inlineRadioOptionsE" id="inlineRadio4" value="自愿者活动"> 经济学简史
+                <input type="radio" name="inlineRadioOptionsE" id="inlineRadio4" value="经济学简史"> 经济学简史
             </label>
             <label class="radio-inline" style="width: 100%;margin-left:0px;margin-top:5px;">
-                <input type="radio" name="inlineRadioOptionsE" id="inlineRadio5" value="义务清洁工"> 时间驳论
+                <input type="radio" name="inlineRadioOptionsE" id="inlineRadio5" value="时间驳论"> 时间驳论
             </label>
             <label class="radio-inline" style="width: 100%;margin-left:0px;margin-top:5px;">
-                <input type="radio" name="inlineRadioOptionsE" id="inlineRadio6" value="文化宣传"> 数据的奥秘
+                <input type="radio" name="inlineRadioOptionsE" id="inlineRadio6" value="数据的奥秘"> 数据的奥秘
             </label>
         </div>
 
@@ -36,7 +36,7 @@
 
         <div class="col-lg-4 col-md-4">
             <div style="font-size: 14px;font-weight: 400;text-shadow: 1px 1px 1px black;">已选课程</div>
-            <select multiple style="border:none;">
+            <select multiple style="border:none;overflow:hidden;">
                 <option ng-repeat="course in selExpCourse">{{course}}</option>
             </select>
         </div>

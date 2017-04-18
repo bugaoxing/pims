@@ -2,11 +2,77 @@
 
 <div class="modal-header">
     <button type="button" class="close" aria-hidden="true" ng-click="closeSchedule()">×</button>
-    <h4 class="modal-title">课程表</h4>
+    <h4 class="modal-title">{{classNAME}}班的课程表</h4>
 </div>
-<div class="modal-body">
+<div class="modal-body" style="padding:40px;">
+
+    <div class="row">
+        <div class="col-lg-2 col-md-2">
+            <table style="border-collapse:separate; border-spacing:0px 10px;">
+                <th style="text-shadow: 1px 0px 0px black">时间</th>
+                <tr>
+                    <td style="text-shadow: 1px 0px 0px black">7:00~9:00</td>
+                </tr>
+                <tr>
+                    <td style="text-shadow: 1px 0px 0px black">9:00~11:00</td>
+                </tr>
+                <tr>
+                    <td style="text-shadow: 1px 0px 0px black">13:00~15:00</td>
+                </tr>
+                <tr>
+                    <td style="text-shadow: 1px 0px 0px black">15:00~17:00</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="col-lg-2 col-md-2">
+            <table style="border-collapse:separate; border-spacing:0px 10px;">
+                <th style="text-shadow: 1px 0px 0px black">星期一</th>
+                <tr ng-repeat="course in SelSchedule.mondayClass track by $index">
+                    <td>{{course}}</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="col-lg-2 col-md-2">
+            <table style="border-collapse:separate; border-spacing:0px 10px;">
+                <th style="text-shadow: 1px 0px 0px black">星期二</th>
+                <tr ng-repeat="course in SelSchedule.tuesdayClass track by $index">
+                    <td>{{course}}</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="col-lg-2 col-md-2">
+            <table style="border-collapse:separate; border-spacing:0px 10px;">
+                <th style="text-shadow: 1px 0px 0px black">星期三</th>
+                <tr ng-repeat="course in SelSchedule.wednesdayClass track by $index">
+                    <td>{{course}}</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="col-lg-2 col-md-2">
+            <table style="border-collapse:separate; border-spacing:0px 10px;">
+                <th style="text-shadow: 1px 0px 0px black">星期四</th>
+                <tr ng-repeat="course in SelSchedule.thursdayClass track by $index">
+                    <td>{{course}}</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="col-lg-2 col-md-2">
+            <table style="border-collapse:separate; border-spacing:0px 10px;">
+                <th style="text-shadow: 1px 0px 0px black">星期五</th>
+                <tr ng-repeat="course in SelSchedule.fridayClass track by $index">
+                    <td>{{course}}</td>
+                </tr>
+            </table>
+        </div>
 
 
+
+    </div>
 
 </div>
 
