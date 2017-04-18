@@ -126,7 +126,7 @@ public class PIMSController {
 
     }
 
-    @RequestMapping(value = "/initMockData", method = RequestMethod.POST, produces = "application/json")
+    @RequestMapping(value = "/initMockData", method = RequestMethod.GET, produces = "application/json")
     public
     @ResponseBody
     ResponsePackage mockData() {
