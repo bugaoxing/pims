@@ -133,19 +133,19 @@ public class PIMSController {
 
         try {
             //Mock major data
-//            List<Major> majors = new ArrayList<Major>();
-//            for(MajorType majorType:MajorType.values()){
-//                Major major = new Major();
-//                try {
-//                    Thread.sleep(100);
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                }
-//                major.setId(String.valueOf(new Date().getTime()));
-//                major.setMajor(majorType.name());
-//                majors.add(major);
-//            }
-//            ManagerBuilder.build("Major").insertList(majors);
+            List<Major> majors = new ArrayList<Major>();
+            for(MajorType majorType:MajorType.values()){
+                Major major = new Major();
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                major.setId(String.valueOf(new Date().getTime()));
+                major.setMajor(majorType.name());
+                majors.add(major);
+            }
+            ManagerBuilder.build("Major").insertList(majors);
 
             //TODO add another mock data
 
