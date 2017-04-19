@@ -160,14 +160,7 @@ PRM.controller('PDController', ["$window", "PRMconf", "ngTableParams", '$loading
         $scope.goSchedule = function (classNAME, event) {
             $scope.classNAME = classNAME;
             event.preventDefault();
-            schedulePad = $uibModal.open({
-                animation: true,
-                size: "lg",
-                templateUrl: 'app/partials/modals/ScheduleModal.html',
-                //controller: 'EDController',
-                scope: $scope
 
-            });
             QueryToolService.queryAllSchedule({},function(res){
 
                 var idVal = "";
@@ -181,6 +174,14 @@ PRM.controller('PDController', ["$window", "PRMconf", "ngTableParams", '$loading
                     console.log("Now getting schedule");
                     if(res.data && res.data.length==1){
                         $scope.SelSchedule = res.data[0];
+                        schedulePad = $uibModal.open({
+                            animation: true,
+                            size: "lg",
+                            templateUrl: 'app/partials/modals/ScheduleModal.html',
+                            //controller: 'EDController',
+                            scope: $scope
+
+                        });
                     }
 
                 },function(err){

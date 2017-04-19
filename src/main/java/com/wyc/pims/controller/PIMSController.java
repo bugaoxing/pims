@@ -74,7 +74,7 @@ public class PIMSController {
 
     }
 
-    @RequestMapping(value = "/queryScheduleByKeyValue", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+    @RequestMapping(value = "/queryScheduleByKeyValue", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     public
     @ResponseBody
     ResponsePackage queryScheduleById(String key,String value) {
