@@ -163,10 +163,11 @@
                                             <input type="text" class="form-control" ng-disabled="true" ng-model="data[column.field]"
                                                    aria-label="...">
 
-                                            <div class="input-group-btn">
+                                            <div class="input-group-btn">d
                                                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
                                                         aria-haspopup="true" aria-expanded="false"><span class="caret"></span></button>
                                                 <ul class="dropdown-menu dropdown-menu-right">
+                                                    <li><a target="_self" ng-click="data[column.field] = '休息'">休息</a></li>
                                                     <li ng-repeat="course in selectedCourseList"><a target="_self"
                                                                                                    ng-click="data[column.field] = course;">{{course}}</a>
                                                     </li>
