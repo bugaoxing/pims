@@ -40,9 +40,9 @@
                                    aria-expanded="false">{{$root.login.role=='admin'?'教务处管理员':$root.login.role=='subAdmin'?'学生处管理员':'学生'}}<span
                                         class="caret"></span></a>
                                 <ul class="dropdown-menu">
-                                    <li ng-show="$root.role=='admin'"><a target="_self" ng-click="$root.login.role='admin'">教务处管理员</a></li>
-                                    <li ng-show="$root.role=='admin'"><a target="_self" ng-click="$root.login.role='subAdmin'">学生处管理员</a></li>
-                                    <li ng-show="$root.role=='subAdmin'"><a target="_self" ng-click="$root.login.role='member'">学生</a></li>
+                                    <li ng-if="$root.role=='admin'"><a target="_self" ng-click="$root.login.role='admin'">教务处管理员</a></li>
+                                    <li ng-if="$root.role=='admin'"><a target="_self" ng-click="$root.login.role='subAdmin'">学生处管理员</a></li>
+                                    <li ng-if="$root.role=='subAdmin'"><a target="_self" ng-click="$root.login.role='member'">学生</a></li>
                                 </ul>
                             </li>
                         </ul>
