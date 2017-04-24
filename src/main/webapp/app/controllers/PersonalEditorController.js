@@ -237,12 +237,29 @@ PRM.controller('PDController', ["$window", "PRMconf", "ngTableParams", '$loading
             QueryToolService.addPerson($scope.addServerRequest, function (res) {
                 if (res.successful) {
                     noty.show("添加成功!", 'success');
+                    console.dir(res.data);
+                    var idRe = res.data[0].number;
+
+                    QueryToolService.register({
+                        id:idRe,
+                        password:idRe,
+                        role:"member"
+                    },function(res){
+
+                        if(res.successful){
+                            noty.show(res.message, 'success');
+                        }else{
+                            noty.show(res.message, 'error');
+                        }
+                    },function(error){
+                        noty.show("注册失败", 'error');
+                    });
+
                     $scope.refreshTable();
                     addDomainPop.dismiss('cancel');
                 } else {
                     noty.show(res.message, 'error');
                 }
-
                 $loading.finish("loadingMask");
             }, function (error) {
                 $loading.finish("loadingMask");
@@ -322,6 +339,16 @@ PRM.controller('PDController', ["$window", "PRMconf", "ngTableParams", '$loading
             $loading.start("loadingMask");
             QueryToolService.getAllPerson({}, function (res) {
                 $rootScope.domainRootInfo = res.data;
+                console.log($rootScope.login.role);
+                if($rootScope.role=='member'){
+                    $rootScope.domainRootInfo = [];
+                    angular.forEach(res.data,function(rec){
+                        if(rec.number == $rootScope.login.id){
+                            $rootScope.domainRootInfo.push(rec);
+                        }
+                    });
+                }
+
 
                 $scope.data = [];
                 $scope.columns = [];

@@ -254,7 +254,9 @@ public class PIMSController {
             }
             student.setNumber(nextNumber);
             ManagerBuilder.build("Student").insert(student);
-            return UnifiedFunctions.buildQuickEmptySuccess("成功");
+            List<Student> returnList = new ArrayList<Student>();
+            returnList.add(student);
+            return UnifiedFunctions.buildQuickSuccess(returnList,"成功");
 
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
@@ -326,7 +328,9 @@ public class PIMSController {
             if (existCount > 0)
                 return UnifiedFunctions.buildQuickError("该用户已经注册");
             ManagerBuilder.build("User").insert(user);
-            return UnifiedFunctions.buildQuickEmptySuccess("注册成功");
+            List<User> returnList = new ArrayList<User>();
+            returnList.add(user);
+            return UnifiedFunctions.buildQuickSuccess(returnList, "注册成功");
 
         } catch (ClassNotFoundException e) {
             e.printStackTrace();

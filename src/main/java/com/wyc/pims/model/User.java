@@ -15,6 +15,7 @@ public class User {
     @Id
     String id;
     String password;
+    //admin - 教务处 subAdmin - 学生办 member - 学生
     String role;
     Date regDate;
 

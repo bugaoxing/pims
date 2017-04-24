@@ -3,6 +3,7 @@ PRM.controller('HomeController', ['noty','$loading','QueryToolService','$uibModa
 
         //Default page name
         $scope.pageName = "PersonalEditor";
+
         $scope.changeLanding = function (pageName) {
             $scope.pageName = pageName;
             $rootScope.pageTitle = pageName;
@@ -19,6 +20,7 @@ PRM.controller('HomeController', ['noty','$loading','QueryToolService','$uibModa
             QueryToolService.login($rootScope.login,function(res){
 
                 if(res.successful){
+                    $rootScope.login = res.data[0];
                     $rootScope.role = res.data[0].role;
                     $rootScope.logged = true;
                     noty.show(res.message, 'success');
@@ -35,6 +37,7 @@ PRM.controller('HomeController', ['noty','$loading','QueryToolService','$uibModa
 
         $scope.register = function(){
             $rootScope.isRegister = true;
+            console.dir($rootScope.login);
             console.log("register");
         };
 
@@ -42,7 +45,8 @@ PRM.controller('HomeController', ['noty','$loading','QueryToolService','$uibModa
 
             if(PRMconf.isNullOrEmptyOrUndefined($rootScope.login.id)||
                 PRMconf.isNullOrEmptyOrUndefined($rootScope.login.password)||
-                PRMconf.isNullOrEmptyOrUndefined($rootScope.login.password2))
+                PRMconf.isNullOrEmptyOrUndefined($rootScope.login.password2||
+                PRMconf.isNullOrEmptyOrUndefined($rootScope.login.role)))
             {
                 noty.show("请确认已经填写所有信息以注册用户!", 'error');
                 return;
@@ -52,7 +56,7 @@ PRM.controller('HomeController', ['noty','$loading','QueryToolService','$uibModa
                 return;
             }
             $loading.start("loadingMask");
-            $rootScope.login.role = "member";
+            $rootScope.role = "member";
             QueryToolService.register($rootScope.login,function(res){
 
                 if(res.successful){
@@ -70,6 +74,7 @@ PRM.controller('HomeController', ['noty','$loading','QueryToolService','$uibModa
         };
         $scope.registerDismiss = function(){
             $rootScope.isRegister = false;
+            $rootScope.logged = true;
             console.log("registerDismiss");
         };
 
