@@ -26,9 +26,9 @@ import java.util.Map;
 public class PIMSController {
 
     @RequestMapping(value = "/queryAll", method = RequestMethod.GET, produces = "application/json")
-     public
-     @ResponseBody
-     ResponsePackage getAllPerson() {
+    public
+    @ResponseBody
+    ResponsePackage getAllPerson() {
 
         try {
             List<Student> students = ManagerBuilder.build("Student").read();
@@ -42,9 +42,9 @@ public class PIMSController {
     }
 
     @RequestMapping(value = "/queryAllSchedule", method = RequestMethod.GET, produces = "application/json")
-     public
-     @ResponseBody
-     ResponsePackage queryAllSchedule() {
+    public
+    @ResponseBody
+    ResponsePackage queryAllSchedule() {
 
         try {
             List<Student> students = ManagerBuilder.build("Schedule").read();
@@ -56,6 +56,7 @@ public class PIMSController {
         }
 
     }
+
     @RequestMapping(value = "/queryScheduleById", method = RequestMethod.GET, produces = "application/json")
     public
     @ResponseBody
@@ -77,13 +78,13 @@ public class PIMSController {
     @RequestMapping(value = "/queryScheduleByKeyValue", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     public
     @ResponseBody
-    ResponsePackage queryScheduleById(String key,String value) {
+    ResponsePackage queryScheduleById(String key, String value) {
 
         try {
 //            String append = value.substring(value.length()-2);
 //            String tValue = value.substring(0,value.length()-2);
 //            String newVal = URLDecoder.decode(tValue,"utf-8");
-            List<Schedule> schedules = ManagerBuilder.build("Schedule").findByColumn(key,value);
+            List<Schedule> schedules = ManagerBuilder.build("Schedule").findByColumn(key, value);
             return UnifiedFunctions.buildQuickSuccess(schedules, "成功");
 
         } catch (ClassNotFoundException e) {
@@ -134,7 +135,7 @@ public class PIMSController {
         try {
             //Mock major data
             List<Major> majors = new ArrayList<Major>();
-            for(MajorType majorType:MajorType.values()){
+            for (MajorType majorType : MajorType.values()) {
                 Major major = new Major();
                 try {
                     Thread.sleep(100);
@@ -150,7 +151,7 @@ public class PIMSController {
             //TODO add another mock data
 
             List<Schedule> schedules = new ArrayList<Schedule>();
-            for(MajorType majorType:MajorType.values()){
+            for (MajorType majorType : MajorType.values()) {
                 Schedule schedule = new Schedule();
                 try {
                     Thread.sleep(10);
@@ -158,12 +159,11 @@ public class PIMSController {
                     e.printStackTrace();
                 }
                 schedule.setId(String.valueOf(new Date().getTime()));
-                schedule.setClassName(majorType.name()+"01");
+                schedule.setClassName(majorType.name() + "01");
                 schedule.setPeriod("大一上");
                 schedules.add(schedule);
             }
             ManagerBuilder.build("Schedule").insertList(schedules);
-
 
 
             return UnifiedFunctions.buildQuickEmptySuccess("成功");
@@ -209,7 +209,6 @@ public class PIMSController {
     }
 
 
-
     @RequestMapping(value = "/deleteCourse", method = RequestMethod.POST, produces = "application/json")
     public
     @ResponseBody
@@ -245,18 +244,15 @@ public class PIMSController {
                     }
                 }
                 nextNumber = nextNumber + 1;
-                for (Student student1 : students) {
-                    if (student1.getNumber() == 0) {
-                        student1.setNumber(nextNumber++);
-                        ManagerBuilder.build("Student").insert(student1);
-                    }
-                }
             }
-            student.setNumber(nextNumber);
+            long exist = ManagerBuilder.build("Student").findExist(student.getId());
+            if (exist == 0) {
+                student.setNumber(nextNumber);
+            }
             ManagerBuilder.build("Student").insert(student);
             List<Student> returnList = new ArrayList<Student>();
             returnList.add(student);
-            return UnifiedFunctions.buildQuickSuccess(returnList,"成功");
+            return UnifiedFunctions.buildQuickSuccess(returnList, "成功");
 
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
@@ -266,9 +262,9 @@ public class PIMSController {
     }
 
     @RequestMapping(value = "/addPersons", method = RequestMethod.POST, produces = "application/json")
-     public
-     @ResponseBody
-     ResponsePackage addPersons(@RequestBody List<Student> students) {
+    public
+    @ResponseBody
+    ResponsePackage addPersons(@RequestBody List<Student> students) {
 
         try {
             ManagerBuilder.build("Student").insertList(students);

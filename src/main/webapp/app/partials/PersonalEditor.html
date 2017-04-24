@@ -72,7 +72,7 @@
                                                ng-model="data[column.field]" ng-keydown="recordToSave(data.id)">
                                         <button type="button" ng-if="column.field=='className'" uib-tooltip="点击查看课程表"
                                                 ng-click="goSchedule(data.className,$event)" class="btn btn-default btn-success">{{data.className}}</button>
-                                        <button type="button" ng-if="column.field=='name'" uib-tooltip="{{'年龄:'+data.age+'\n'+'性别:'+data.sex;}}" class="btn btn-default btn-success">{{data.name}}</button>
+                                        <button type="button" ng-if="column.field=='name'" uib-tooltip="{{'年龄:'+data.age+' |'+'性别:'+data.sex+' |'+'课外实践课:'+data.shijianCourse+' |'+'选修课:'+data.xuanxiuCourse;}}" class="btn btn-default btn-success">{{data.name}}</button>
                                         <div ng-if="column.field=='more'&&$root.role=='member'">
                                             <div class="dropdown">
                                                 <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
